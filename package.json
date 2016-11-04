@@ -1,0 +1,60 @@
+{
+  "author": "Chad Macey <chad_macey@hotmail.com>",
+  "bugs": {
+    "url": "https://github.com/midknight41/test-helper/issues"
+  },
+  "contributors": [
+    "Chad Macey <chad_macey@hotmail.com>"
+  ],
+  "dependencies": {
+    "check-verify": "^0.3.0",
+    "lodash": "^4.16.6",
+    "q": "^1.4.1"
+  },
+  "description": "Some little time savers for testing with Code and Lab",
+  "devDependencies": {
+    "code": "^4.0.0",
+    "coveralls": "^2.11.14",
+    "istanbul": "^0.4.4",
+    "jscoverage": "^0.6.0",
+    "lab": "^11.0.1",
+    "rimraf": "^2.5.3",
+    "sinon": "^1.17.6",
+    "tslint": "^3.15.1",
+    "typescript": "^2.0.3"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [ ],
+  "license": "MIT",
+  "main": "./dist/lib/index.js",
+  "name": "@midknight41/test-helper",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/midknight41/test-helper.git"
+  },
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "tsc --pretty -p ./ -d",
+    "clean": "./node_modules/.bin/rimraf dist/*",
+    "precover": "npm run build",
+    "cover": "istanbul cover ./node_modules/lab/bin/lab ./dist/test --leaks",
+    "precoveralls": "npm run cover",
+    "coveralls": "cat ./coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "lint": "tslint -c tslint.json -e 'dist/**/*' -e 'node_modules/**/*' -e 'Scripts/**/*' '**/*.ts'",
+    "pretest": "npm run build",
+    "test": "npm run lint && lab ./dist/test/ -v -S --assert code",
+    "pret": "npm run build",
+    "t": "lab ./dist/test/ -v -S --assert code",
+    "travis": "npm run test",
+    "premajor": "npm run test",
+    "major": "npm version major -m \"published to npm as v%s\" && git push --follow-tags && npm publish",
+    "preminor": "npm run test",
+    "minor": "npm version minor -m \"published to npm as v%s\" && git push --follow-tags && npm publish",
+    "prepatch": "npm run test",
+    "patch": "npm version patch -m \"published to npm as v%s\" && git push --follow-tags && npm publish",
+    "safe": "./safe-install test-helper"
+  },
+  "version": "0.0.0"
+}
