@@ -8,12 +8,12 @@
   ],
   "dependencies": {
     "check-verify": "^0.3.0",
+    "code": "^4.0.0",
     "lodash": "^4.16.6",
     "q": "^1.4.1"
   },
   "description": "Some little time savers for testing with Code and Lab",
   "devDependencies": {
-    "code": "^4.0.0",
     "coveralls": "^2.11.14",
     "istanbul": "^0.4.4",
     "jscoverage": "^0.6.0",
