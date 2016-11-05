@@ -46,5 +46,4 @@ lab.experiment("standardContructorTest", () => {
 - setup travis
 - setup coveralls
 - replace coveralls token
-- setup dep checks
 - update badges
