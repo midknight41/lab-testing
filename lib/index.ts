@@ -76,7 +76,7 @@ export class TestHelper {
 
         const throws = function () {
           Class.apply({}, altered);
-        }
+        };
 
         expect(throws).to.throw();
 
@@ -90,7 +90,7 @@ export class TestHelper {
 
         const throws = function () {
           Class.apply({}, altered);
-        }
+        };
 
         expect(throws).to.throw();
 

@@ -1,7 +1,7 @@
 {
   "author": "Chad Macey <chad_macey@hotmail.com>",
   "bugs": {
-    "url": "https://github.com/midknight41/test-helper/issues"
+    "url": "https://github.com/midknight41/lab-testing/issues"
   },
   "contributors": [
     "Chad Macey <chad_macey@hotmail.com>"
@@ -29,10 +29,10 @@
   "keywords": [ ],
   "license": "MIT",
   "main": "./dist/lib/index.js",
-  "name": "@midknight41/test-helper",
+  "name": "lab-testing",
   "repository": {
     "type": "git",
-    "url": "https://github.com/midknight41/test-helper.git"
+    "url": "https://github.com/midknight41/lab-testing.git"
   },
   "scripts": {
     "prebuild": "npm run clean",
@@ -54,7 +54,7 @@
     "minor": "npm version minor -m \"published to npm as v%s\" && git push --follow-tags && npm publish",
     "prepatch": "npm run test",
     "patch": "npm version patch -m \"published to npm as v%s\" && git push --follow-tags && npm publish",
-    "safe": "./safe-install test-helper"
+    "safe": "./safe-install lab-testing"
   },
   "version": "0.0.0"
 }
