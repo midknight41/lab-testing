@@ -7,7 +7,7 @@
     "Chad Macey <chad_macey@hotmail.com>"
   ],
   "dependencies": {
-    "check-verify": "^0.3.0",
+    "check-verify": "^0.4.0",
     "code": "^4.0.0",
     "lodash": "^4.16.6",
     "q": "^1.4.1"
@@ -20,7 +20,7 @@
     "lab": "^11.0.1",
     "rimraf": "^2.5.3",
     "sinon": "^1.17.6",
-    "tslint": "^3.15.1",
+    "tslint": "^4.0.2",
     "typescript": "^2.0.3"
   },
   "files": [

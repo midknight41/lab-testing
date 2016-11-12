@@ -13,14 +13,12 @@ export enum Behaviour {
   satisfies
 }
 
-const behaviourLabels = ["rejects", "throws", "satisfies"];
-
 export interface ParameterSpecification {
-  labels: string[],
-  params: any[]
+  labels: string[];
+  params: any[];
 }
 
-export class ParameterTester {
+export default class ParameterTester {
 
   private lab: Lab;
   private testContainer: Function;
@@ -60,13 +58,13 @@ export class ParameterTester {
 
       // Test null params
 
-      this.createThrowTests(["a null", "an undefined"], [null, undefined], params, i, label, fnc);
+      this.createThrowTests(self, ["a null", "an undefined"], [null, undefined], params, i, label, fnc);
 
     }
 
   }
 
-  private createThrowTests(valueDescriptions: string[], values: any[], params: any[], currentId: number, fieldName: string, fnc: Function) {
+  private createThrowTests(obj: Object, valueDescriptions: string[], values: any[], params: any[], currentId: number, fieldName: string, fnc: Function) {
 
     const lab = this.lab;
 
@@ -74,20 +72,23 @@ export class ParameterTester {
 
       const altered = this.substituteEntry(currentId, params, values[i]);
       const description = valueDescriptions[i];
-      const behaviour = behaviourLabels[this.testContainer];
+      const behaviour = "throw";
 
-      lab.test(`${behaviour} on ${description} ${fieldName}`, done => {
+      this.testContainer(obj, fnc, lab, altered, description, fieldName);
 
-        const throws = function () {
-          fnc.apply(self, altered);
-        };
-
-        expect(throws).to.throw();
-
-        done();
-
-      });
-
+      /*
+            lab.test(`${behaviour} on ${description} ${fieldName}`, done => {
+      
+              const throws = function () {
+                fnc.apply(obj, altered);
+              };
+      
+              expect(throws).to.throw();
+      
+              done();
+      
+            });
+      */
     }
 
   }
@@ -101,26 +102,4 @@ export class ParameterTester {
 
   }
 
-}
-
-export default function getHelper(lab: Lab) {
-
-  return new ParameterTester(lab, throwTest);
-
-}
-
-
-function throwTest(obj: Object, fnc: Function, lab: Lab, value: string, description: string, fieldName: string) {
-
-  lab.test(`$throws on ${description} ${fieldName}`, done => {
-
-    const throws = function () {
-      fnc.apply(obj, value);
-    };
-
-    expect(throws).to.throw();
-
-    done();
-
-  });
 }

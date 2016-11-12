@@ -2,6 +2,7 @@ import * as Code from "code";
 import { Lab } from "lab";
 import * as Q from "q";
 import { thrower } from "check-verify";
+import ParameterTester from "./ParameterTester";
 
 const expect = Code.expect;
 
@@ -10,13 +11,19 @@ import * as _ from "lodash";
 export class TestHelper {
 
   private lab: Lab;
+  public rejects: ParameterTester;
+  public throws: ParameterTester;
 
-  constructor(lab: Lab) {
+  constructor(lab: Lab, throwsTester: ParameterTester, rejectTester: ParameterTester) {
 
-    thrower({ lab })
-      .check("lab").is.an.object();
+    thrower({ lab, throwsTester, rejectTester })
+      .check("lab").is.an.object()
+      .check("throwsTester").is.an.object()
+      .check("rejectTester").is.an.object();
 
     this.lab = lab;
+    this.throws = throwsTester;
+    this.rejects = rejectTester;
   }
 
   createExperiment(service: string, component: string): Function {
@@ -97,97 +104,16 @@ export class TestHelper {
 
     });
 
-    for (let i = 0; i < params.length; i++) {
-
-      const label = labels[i];
-
-      // Test null params
-      lab.test(`throws on a null ${label}`, done => {
-
-        const altered = this.substituteEntry(i, params, null);
-
-        const throws = function () {
-          Class.apply({}, altered);
-        };
-
-        expect(throws).to.throw();
-
-        done();
-
-      });
-
-      lab.test(`throws on a undefined ${label}`, done => {
-
-        const altered = this.substituteEntry(i, params, undefined);
-
-        const throws = function () {
-          Class.apply({}, altered);
-        };
-
-        expect(throws).to.throw();
-
-        done();
-
-      });
-
-    }
+    this.throws.methodParameterTest({}, Class, labels, ...params);
 
   }
 
   public functionParameterTest(fnc: Function, labels: string[], ...params) {
-    return this.methodParameterTest(null, fnc, labels, ...params);
+    return this.throws.methodParameterTest(null, fnc, labels, ...params);
   }
 
   public methodParameterTest(self: Object, fnc: Function, labels: string[], ...params) {
-
-    thrower({ self, fnc, labels, params })
-      .check("fnc").is.a.function()
-      .check("labels").is.an.array();
-    // .optional("self").is.an.object()
-    // .optional("params").is.an.array()
-
-    const lab = this.lab;
-
-    lab.test("ran the function parameter test properly", done => {
-      expect(labels.length).to.equal(params.length);
-      done();
-    });
-
-    for (let i = 0; i < params.length; i++) {
-
-      const label = labels[i];
-
-      // Test null params
-      lab.test(`throws on a null ${label}`, done => {
-
-        const altered = this.substituteEntry(i, params, null);
-
-        const throws = function () {
-          fnc.apply(self, altered);
-        };
-
-        expect(throws).to.throw();
-
-        done();
-
-      });
-
-      lab.test(`throws on a undefined ${label}`, done => {
-
-        const altered = this.substituteEntry(i, params, undefined);
-
-        const throws = function () {
-          fnc.apply(self, altered);
-        };
-
-        expect(throws).to.throw();
-
-        done();
-
-      });
-
-    }
-
+    return this.throws.methodParameterTest(self, fnc, labels, ...params);
 
   }
 
@@ -204,6 +130,39 @@ export class TestHelper {
 
 export default function getHelper(lab: Lab) {
 
-  return new TestHelper(lab);
+  const throwTester = new ParameterTester(lab, throwTest);
+  const rejectTester = new ParameterTester(lab, rejectTest);
 
+  return new TestHelper(lab, throwTester, rejectTester);
+
+}
+
+function throwTest(obj: Object, fnc: Function, lab: Lab, values: any[], description: string, fieldName: string) {
+
+  lab.test(`throws on ${description} ${fieldName}`, done => {
+
+    const throws = function () {
+      fnc.apply(obj, values);
+    };
+
+    expect(throws).to.throw();
+
+    done();
+
+  });
+}
+
+function rejectTest(obj: Object, fnc: Function, lab: Lab, values: any[], description: string, fieldName: string) {
+
+  lab.test(`throws on ${description} ${fieldName}`, done => {
+
+    const throws = function () {
+      fnc.apply(obj, values);
+    };
+
+    expect(throws).to.throw();
+
+    done();
+
+  });
 }

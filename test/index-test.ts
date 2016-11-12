@@ -6,9 +6,9 @@ import { thrower } from "check-verify";
 
 const lab = exports.lab = Lab.script();
 const expect = Code.expect;
-const helper = getHelper(lab);
+const testing = getHelper(lab);
 
-const method = helper.createExperiment("ServiceEntry", "ComponentEntry");
+const method = testing.createExperiment("ServiceEntry", "ComponentEntry");
 
 class TestClass {
 
@@ -49,7 +49,7 @@ lab.experiment("TestHelper", () => {
     lab.test("A null service throws an error", done => {
 
       try {
-        helper.createExperiment(null, "DeepReferences");
+        testing.createExperiment(null, "DeepReferences");
         Code.fail("unexpected success");
       }
       catch (ex) {
@@ -60,7 +60,7 @@ lab.experiment("TestHelper", () => {
     lab.test("An undefined service throws an error", done => {
 
       try {
-        helper.createExperiment(undefined, "DeepReferences");
+        testing.createExperiment(undefined, "DeepReferences");
         Code.fail("unexpected success");
       }
       catch (ex) {
@@ -72,7 +72,7 @@ lab.experiment("TestHelper", () => {
     lab.test("A null component throws an error", done => {
 
       try {
-        helper.createExperiment("CheckVerify", null);
+        testing.createExperiment("CheckVerify", null);
         Code.fail("unexpected success");
       }
       catch (ex) {
@@ -83,7 +83,7 @@ lab.experiment("TestHelper", () => {
     lab.test("An undefined component throws an error", done => {
 
       try {
-        helper.createExperiment("CheckVerify", undefined);
+        testing.createExperiment("CheckVerify", undefined);
         Code.fail("unexpected success");
       }
       catch (ex) {
@@ -95,32 +95,54 @@ lab.experiment("TestHelper", () => {
   });
 
   lab.experiment("standardContructorTest", () => {
-    helper.standardContructorTest(TestClass, ["one", "two"], "one", "two");
+    testing.standardContructorTest(TestClass, ["one", "two"], "one", "two");
 
   });
 
-  lab.experiment("methodParameterTest", () => {
+  lab.experiment("throws", () => {
 
-    const obj = new TestClass("one", "two");
+    lab.experiment("methodParameterTest", () => {
 
-    helper.methodParameterTest(obj, obj.method, ["one", "two"], "one", "two");
+      const obj = new TestClass("one", "two");
+
+      testing.throws.methodParameterTest(obj, obj.method, ["one", "two"], "one", "two");
+
+      lab.test("does not error when called correctly", done => {
+
+        const obj = new TestClass("one", "two");
+
+        obj.method("one", "two");
+        return done();
+
+      });
+
+    });
+
+
+    lab.experiment("functionParameterTest", () => {
+
+      const fnc = function (one, two) {
+
+        thrower({ one, two })
+          .check("one").is.string()
+          .check("two").is.string();
+
+        return;
+      };
+
+      testing.throws.functionParameterTest(fnc, ["one", "two"], "one", "two");
+
+      lab.test("does not error when called correctly", done => {
+
+        const obj = new TestClass("one", "two");
+
+        fnc("one", "two");
+        return done();
+
+      });
+
+    });
 
   });
-
-  lab.experiment("functionParameterTest", () => {
-
-    const fnc = function (one, two) {
-
-      thrower({ one, two })
-        .check("one").is.string()
-        .check("two").is.string();
-
-      return;
-    };
-
-    helper.functionParameterTest(fnc, ["one", "two"], "one", "two");
-
-  });
-
 
 });
