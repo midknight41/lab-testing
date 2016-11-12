@@ -8,7 +8,7 @@ const expect = Code.expect;
 
 import * as _ from "lodash";
 
-export class TestHelper {
+export class LabTesting {
 
   private lab: Lab;
   public rejects: ParameterTester;
@@ -109,10 +109,18 @@ export class TestHelper {
   }
 
   public functionParameterTest(fnc: Function, labels: string[], ...params) {
+
+    /* tslint:disable no-console */
+    console.warn("LabTesting.functionParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.functionParameterTest instead");
+
     return this.throws.methodParameterTest(null, fnc, labels, ...params);
   }
 
   public methodParameterTest(self: Object, fnc: Function, labels: string[], ...params) {
+
+    /* tslint:disable no-console */
+    console.warn("LabTesting.methodParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.methodParameterTest instead");
+
     return this.throws.methodParameterTest(self, fnc, labels, ...params);
 
   }
@@ -133,7 +141,7 @@ export default function getHelper(lab: Lab) {
   const throwTester = new ParameterTester(lab, throwTest);
   const rejectTester = new ParameterTester(lab, rejectTest);
 
-  return new TestHelper(lab, throwTester, rejectTester);
+  return new LabTesting(lab, throwTester, rejectTester);
 
 }
 

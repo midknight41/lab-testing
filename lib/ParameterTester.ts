@@ -7,12 +7,6 @@ const expect = Code.expect;
 
 import * as _ from "lodash";
 
-export enum Behaviour {
-  rejects,
-  throws,
-  satisfies
-}
-
 export interface ParameterSpecification {
   labels: string[];
   params: any[];
@@ -41,9 +35,9 @@ export default class ParameterTester {
 
     thrower({ self, fnc, labels, params })
       .check("fnc").is.a.function()
-      .check("labels").is.an.array();
-    // .optional("self").is.an.object()
-    // .optional("params").is.an.array()
+      .check("labels").is.an.array()
+      .optional("self").is.an.object()
+      .optional("params").is.an.array();
 
     const lab = this.lab;
 
@@ -58,13 +52,13 @@ export default class ParameterTester {
 
       // Test null params
 
-      this.createThrowTests(self, ["a null", "an undefined"], [null, undefined], params, i, label, fnc);
+      this.createTests(self, ["a null", "an undefined"], [null, undefined], params, i, label, fnc);
 
     }
 
   }
 
-  private createThrowTests(obj: Object, valueDescriptions: string[], values: any[], params: any[], currentId: number, fieldName: string, fnc: Function) {
+  private createTests(obj: Object, valueDescriptions: string[], values: any[], params: any[], currentId: number, fieldName: string, fnc: Function) {
 
     const lab = this.lab;
 
@@ -76,19 +70,6 @@ export default class ParameterTester {
 
       this.testContainer(obj, fnc, lab, altered, description, fieldName);
 
-      /*
-            lab.test(`${behaviour} on ${description} ${fieldName}`, done => {
-      
-              const throws = function () {
-                fnc.apply(obj, altered);
-              };
-      
-              expect(throws).to.throw();
-      
-              done();
-      
-            });
-      */
     }
 
   }

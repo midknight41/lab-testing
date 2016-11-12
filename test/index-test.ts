@@ -44,7 +44,7 @@ method("createExperiment", () => {
   });
 });
 
-lab.experiment("TestHelper", () => {
+lab.experiment("LabTesting", () => {
   lab.experiment("createExperiment", () => {
     lab.test("A null service throws an error", done => {
 
@@ -98,6 +98,26 @@ lab.experiment("TestHelper", () => {
     testing.standardContructorTest(TestClass, ["one", "two"], "one", "two");
 
   });
+
+  lab.experiment("deprecated code works with warnings", () => {
+
+    const obj = new TestClass("one", "two");
+
+    testing.methodParameterTest(obj, obj.method, ["one", "two"], "one", "two");
+
+    const fnc = function (one, two) {
+
+      thrower({ one, two })
+        .check("one").is.string()
+        .check("two").is.string();
+
+      return;
+    };
+
+    testing.functionParameterTest(fnc, ["one", "two"], "one", "two");
+
+  });
+
 
   lab.experiment("throws", () => {
 

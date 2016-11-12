@@ -8,6 +8,7 @@ declare module "check-verify" {
 
   interface CheckVerify<T> {
     check(field: string): CheckVerify<T>;
+    optional(field: string): CheckVerify<T>;
     verify(source: Object): T;
     explain(): any[];
     array(): CheckVerify<T>;
