@@ -40,8 +40,9 @@ export default class ParameterTester {
       .optional("params").is.an.array();
 
     const lab = this.lab;
+    const testType = self === null ? "function" : "method";
 
-    lab.test("ran the function parameter test properly", done => {
+    lab.test(`ran the ${testType} parameter test properly`, done => {
       expect(labels.length).to.equal(params.length);
       done();
     });

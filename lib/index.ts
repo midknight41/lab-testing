@@ -162,15 +162,16 @@ function throwTest(obj: Object, fnc: Function, lab: Lab, values: any[], descript
 
 function rejectTest(obj: Object, fnc: Function, lab: Lab, values: any[], description: string, fieldName: string) {
 
-  lab.test(`throws on ${description} ${fieldName}`, done => {
+  lab.test(`rejects on ${description} ${fieldName}`, done => {
 
-    const throws = function () {
-      fnc.apply(obj, values);
-    };
-
-    expect(throws).to.throw();
-
-    done();
+    return fnc.apply(obj, values)
+      .then(() => {
+        Code.fail("did not reject");
+      })
+      .catch(error => {
+        expect(error).to.be.an.error();
+        expect(error.message).to.endsWith("is not a populated string");
+      });
 
   });
 }
