@@ -83,9 +83,8 @@ export class LabTesting {
 
     thrower({ Class, labels, params })
       .check("Class").is.a.function()
-      .check("labels").is.an.array();
-    // .optional("params").is.an.array()
-
+      .check("labels").is.an.array()
+      .optional("params").is.an.array();
 
     const lab = this.lab;
 
