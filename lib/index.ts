@@ -169,7 +169,6 @@ function rejectTest(obj: Object, fnc: Function, lab: Lab, values: any[], descrip
       })
       .catch(error => {
         expect(error).to.be.an.error();
-        expect(error.message).to.endsWith("is not a populated string");
       });
 
   });
