@@ -24,6 +24,15 @@ class TestClass {
     this.one = one;
     this.two = two;
   }
+
+  method(one, two) {
+
+    thrower({ one, two })
+      .check("one").is.string()
+      .check("two").is.string();
+
+    return;
+  }
 }
 
 method("createExperiment", () => {
@@ -89,5 +98,29 @@ lab.experiment("TestHelper", () => {
     helper.standardContructorTest(TestClass, ["one", "two"], "one", "two");
 
   });
+
+  lab.experiment("methodParameterTest", () => {
+
+    const obj = new TestClass("one", "two");
+
+    helper.methodParameterTest(obj, obj.method, ["one", "two"], "one", "two");
+
+  });
+
+  lab.experiment("functionParameterTest", () => {
+
+    const fnc = function (one, two) {
+
+      thrower({ one, two })
+        .check("one").is.string()
+        .check("two").is.string();
+
+      return;
+    };
+
+    helper.functionParameterTest(fnc, ["one", "two"], "one", "two");
+
+  });
+
 
 });
