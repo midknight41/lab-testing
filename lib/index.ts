@@ -19,8 +19,27 @@ export class TestHelper {
     this.lab = lab;
   }
 
-  //  createExperiment(service: string, component: string): Function {
-  createExperiment(...levels: string[]): Function {
+  createExperiment(service: string, component: string): Function {
+
+    thrower({ service, component })
+      .check("service").is.a.string()
+      .check("component").is.a.string();
+
+    const me = this;
+
+    const fnc = function (methodName: string, callback: () => void) {
+
+      me.lab.experiment(service, () => {
+        me.lab.experiment(component, () => {
+          me.lab.experiment(methodName, callback);
+        });
+      });
+    };
+
+    return fnc;
+  }
+
+  createExperimentNew(...levels: string[]): Function {
 
     thrower({ levels })
       .check("levels").is.an.array();
