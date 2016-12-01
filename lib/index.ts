@@ -143,7 +143,7 @@ export class TestHelper {
     thrower({ self, fnc, labels, params })
       .check("fnc").is.a.function()
       .check("labels").is.an.array();
-    //  .optional("self").is.an.object()
+    // .optional("self").is.an.object()
     // .optional("params").is.an.array()
 
     const lab = this.lab;
