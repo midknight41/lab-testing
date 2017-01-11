@@ -7,7 +7,13 @@
     "Chad Macey <chad_macey@hotmail.com>"
   ],
   "dependencies": {
-    "check-verify": "^0.4.0",
+    "@types/code": "^4.0.1",
+    "@types/lab": "^11.1.0",
+    "@types/lodash": "^4.14.48",
+    "@types/node": "^7.0.0",
+    "@types/q": "0.0.32",
+    "@types/sinon": "^1.16.34",
+    "check-verify": "^1.0.0",
     "code": "^4.0.0",
     "lodash": "^4.16.6",
     "q": "^1.4.1"
@@ -29,6 +35,8 @@
   "keywords": [],
   "license": "MIT",
   "main": "./dist/lib/index.js",
+  "types": "./dist/lib/index.d.ts",
+  "typings": "./dist/lib/index.d.ts",
   "name": "lab-testing",
   "repository": {
     "type": "git",
@@ -36,7 +44,7 @@
   },
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "tsc --pretty -p ./ -d",
+    "build": "tsc --pretty --lib es2015 -p ./ -d",
     "clean": "./node_modules/.bin/rimraf dist/*",
     "precover": "npm run build",
     "cover": "istanbul cover ./node_modules/lab/bin/lab ./dist/test --leaks",
