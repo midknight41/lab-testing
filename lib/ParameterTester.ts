@@ -16,13 +16,16 @@ export default class ParameterTester {
 
   private lab: Lab;
   private testContainer: Function;
+  private isClass: boolean;
 
-  constructor(lab: Lab, testContainer: Function) {
+  constructor(lab: Lab, testContainer: Function, isClass: boolean) {
 
-    thrower({ lab, testContainer })
+    thrower({ lab, testContainer, isClass })
       .check("lab").is.an.object()
-      .check("testContainer").is.a.function();
+      .check("testContainer").is.a.function()
+      .check("isClass").is.a.boolean();
 
+    this.isClass = isClass;
     this.lab = lab;
     this.testContainer = testContainer;
   }
@@ -42,10 +45,14 @@ export default class ParameterTester {
     const lab = this.lab;
     const testType = self === null ? "function" : "method";
 
-    lab.test(`ran the ${testType} parameter test properly`, done => {
-      expect(labels.length).to.equal(params.length);
-      done();
-    });
+    if (this.isClass === false) {
+
+      lab.test(`ran the ${testType} parameter test properly`, done => {
+        expect(labels.length).to.equal(params.length);
+        done();
+      });
+
+    }
 
     for (let i = 0; i < params.length; i++) {
 
@@ -69,7 +76,7 @@ export default class ParameterTester {
       const description = valueDescriptions[i];
       const behaviour = "throw";
 
-      this.testContainer(obj, fnc, lab, altered, description, fieldName);
+      this.testContainer(obj, fnc, lab, altered, description, fieldName, this.isClass);
 
     }
 

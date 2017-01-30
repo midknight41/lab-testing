@@ -13,17 +13,20 @@ export class LabTesting {
   private lab: Lab;
   public rejects: ParameterTester;
   public throws: ParameterTester;
+  private constructs: ParameterTester;
 
-  constructor(lab: Lab, throwsTester: ParameterTester, rejectTester: ParameterTester) {
+  constructor(lab: Lab, throwsTester: ParameterTester, rejectTester: ParameterTester, constructorTester: ParameterTester) {
 
-    thrower({ lab, throwsTester, rejectTester })
+    thrower({ lab, throwsTester, rejectTester, constructorTester })
       .check("lab").is.an.object()
       .check("throwsTester").is.an.object()
-      .check("rejectTester").is.an.object();
+      .check("rejectTester").is.an.object()
+      .check("constructorTester").is.an.object();
 
     this.lab = lab;
     this.throws = throwsTester;
     this.rejects = rejectTester;
+    this.constructs = constructorTester;
   }
 
   public createExperiment(service: string, component: string): Function {
@@ -96,20 +99,16 @@ export class LabTesting {
     lab.test("returns an object when constructed properly", done => {
 
       const me = {};
-      this.construct(Class, params);
+      construct(Class, params);
 
       expect(me).to.be.an.object();
       done();
 
     });
 
-    this.throws.methodParameterTest({}, Class, labels, ...params);
+    this.constructs.methodParameterTest({}, Class, labels, ...params);
 
   }
-
-  private construct(cls, params) {
-    return new cls(...params);
-  };
 
   public functionParameterTest(fnc: Function, labels: string[], ...params) {
 
@@ -141,19 +140,26 @@ export class LabTesting {
 
 export default function getHelper(lab: Lab) {
 
-  const throwTester = new ParameterTester(lab, throwTest);
-  const rejectTester = new ParameterTester(lab, rejectTest);
+  const throwTester = new ParameterTester(lab, throwTest, false);
+  const rejectTester = new ParameterTester(lab, rejectTest, false);
+  const constructorTester = new ParameterTester(lab, throwTest, true);
 
-  return new LabTesting(lab, throwTester, rejectTester);
+  return new LabTesting(lab, throwTester, rejectTester, constructorTester);
 
 }
 
-function throwTest(obj: Object, fnc: Function, lab: Lab, values: any[], description: string, fieldName: string) {
+function throwTest(obj: Object, fnc: Function, lab: Lab, values: any[], description: string, fieldName: string, isClass: boolean = false) {
 
   lab.test(`throws on ${description} ${fieldName}`, done => {
 
     const throws = function () {
-      fnc.apply(obj, values);
+
+      if (isClass) {
+        construct(fnc, values);
+      } else {
+        fnc.apply(obj, values);
+      }
+
     };
 
     expect(throws).to.throw();
@@ -162,6 +168,10 @@ function throwTest(obj: Object, fnc: Function, lab: Lab, values: any[], descript
 
   });
 }
+
+function construct(cls, params) {
+  return new cls(...params);
+};
 
 function rejectTest(obj: Object, fnc: Function, lab: Lab, values: any[], description: string, fieldName: string) {
 
