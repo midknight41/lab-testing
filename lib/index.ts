@@ -169,11 +169,7 @@ function throwTest(obj: Object, fnc: Function, lab: Lab, values: any[], descript
   });
 }
 
-function construct(cls, params) {
-  return new cls(...params);
-};
-
-function rejectTest(obj: Object, fnc: Function, lab: Lab, values: any[], description: string, fieldName: string) {
+function rejectTest(obj: Object, fnc: Function, lab: Lab, values: any[], description: string, fieldName: string, isClass: boolean = false) {
 
   lab.test(`rejects on ${description} ${fieldName}`, done => {
 
@@ -187,3 +183,7 @@ function rejectTest(obj: Object, fnc: Function, lab: Lab, values: any[], descrip
 
   });
 }
+
+function construct(cls, params) {
+  return new cls(...params);
+};
