@@ -20,6 +20,10 @@
   },
   "description": "Some little time savers for testing with Code and Lab",
   "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-plugin-transform-es2015-destructuring": "^6.22.0",
+    "babel-plugin-transform-es2015-parameters": "^6.22.0",
+    "babel-plugin-transform-es2015-spread": "^6.22.0",
     "coveralls": "^2.11.14",
     "istanbul": "^0.4.4",
     "jscoverage": "^0.6.0",
@@ -45,6 +49,7 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "tsc --pretty --lib es2015 -p ./ -d",
+    "postbuild": "babel dist -d dist",
     "clean": "./node_modules/.bin/rimraf dist/*",
     "precover": "npm run build",
     "cover": "istanbul cover ./node_modules/lab/bin/lab ./dist/test --leaks",
