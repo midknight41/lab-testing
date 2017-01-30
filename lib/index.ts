@@ -26,7 +26,7 @@ export class LabTesting {
     this.rejects = rejectTester;
   }
 
-  createExperiment(service: string, component: string): Function {
+  public createExperiment(service: string, component: string): Function {
 
     thrower({ service, component })
       .check("service").is.a.string()
@@ -46,7 +46,7 @@ export class LabTesting {
     return fnc;
   }
 
-  createExperimentNew(...levels: string[]): Function {
+  private createExperimentNew(...levels: string[]): Function {
 
     thrower({ levels })
       .check("levels").is.an.array();
@@ -79,7 +79,7 @@ export class LabTesting {
     return fnc;
   }
 
-  standardContructorTest(Class, labels: string[], ...params) {
+  public standardContructorTest(Class, labels: string[], ...params) {
 
     thrower({ Class, labels, params })
       .check("Class").is.a.function()
@@ -96,7 +96,7 @@ export class LabTesting {
     lab.test("returns an object when constructed properly", done => {
 
       const me = {};
-      Class.apply(me, params);
+      this.construct(Class, params);
 
       expect(me).to.be.an.object();
       done();
@@ -106,6 +106,10 @@ export class LabTesting {
     this.throws.methodParameterTest({}, Class, labels, ...params);
 
   }
+
+  private construct(cls, params) {
+    return new cls(...params);
+  };
 
   public functionParameterTest(fnc: Function, labels: string[], ...params) {
 
