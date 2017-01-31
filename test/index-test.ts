@@ -8,7 +8,9 @@ const lab = exports.lab = Lab.script();
 const expect = Code.expect;
 const testing = getHelper(lab);
 
-const method = testing.createExperiment("LabTesting", "Main");
+const method = testing.createExperiment("Root", "Main");
+const deepLevels = testing.createExperiment("Root", "One", "Two", "Three", "Pass");
+const oneLevel = testing.createExperiment("Root");
 
 class TestClass {
 
@@ -37,58 +39,101 @@ class TestClass {
 
 method("createExperiment", () => {
 
-  lab.test("The function returned will execute tests", done => {
+  lab.test("The function returned will execute tests  with structure of Root, Main", done => {
 
     return done();
 
   });
 });
 
+deepLevels("createExperiment", () => {
+
+  lab.test("The function returned will execute tests with structure of Root, One, Two, Three, Pass", done => {
+
+    return done();
+
+  });
+});
+
+oneLevel("createExperiment", () => {
+
+  lab.test("The function returned will execute tests with structure of Root", done => {
+
+    return done();
+
+  });
+});
+
+
 lab.experiment("LabTesting", () => {
   lab.experiment("createExperiment", () => {
-    lab.test("A null service throws an error", done => {
+
+    lab.test("No levels throws an error", done => {
+
+      try {
+        testing.createExperiment();
+      }
+      catch (ex) {
+        expect(ex).to.be.an.error(Error, "At least one level is required");
+        return done();
+      }
+
+      Code.fail("unexpected success");
+
+    });
+
+    lab.test("A null first level throws an error", done => {
 
       try {
         testing.createExperiment(null, "DeepReferences");
-        Code.fail("unexpected success");
       }
       catch (ex) {
+        expect(ex).to.be.an.error(Error, "All levels must be strings");
         return done();
       }
 
+      Code.fail("unexpected success");
+
     });
-    lab.test("An undefined service throws an error", done => {
+    lab.test("An undefined first level throws an error", done => {
 
       try {
         testing.createExperiment(undefined, "DeepReferences");
-        Code.fail("unexpected success");
       }
       catch (ex) {
+        expect(ex).to.be.an.error(Error, "All levels must be strings");
         return done();
       }
 
+      Code.fail("unexpected success");
+
+
     });
 
-    lab.test("A null component throws an error", done => {
+    lab.test("A null second level throws an error", done => {
 
       try {
         testing.createExperiment("CheckVerify", null);
-        Code.fail("unexpected success");
       }
       catch (ex) {
+        expect(ex).to.be.an.error(Error, "All levels must be strings");
         return done();
       }
 
+      Code.fail("unexpected success");
+
     });
-    lab.test("An undefined component throws an error", done => {
+    lab.test("An undefined second level throws an error", done => {
 
       try {
         testing.createExperiment("CheckVerify", undefined);
-        Code.fail("unexpected success");
       }
       catch (ex) {
+        expect(ex).to.be.an.error(Error, "All levels must be strings");
         return done();
       }
+
+      Code.fail("unexpected success");
 
     });
 

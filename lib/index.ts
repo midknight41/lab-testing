@@ -29,7 +29,7 @@ export class LabTesting {
     this.constructs = constructorTester;
   }
 
-  public createExperiment(service: string, component: string): Function {
+  public createExperimentOld(service: string, component: string): Function {
 
     thrower({ service, component })
       .check("service").is.a.string()
@@ -49,22 +49,34 @@ export class LabTesting {
     return fnc;
   }
 
-  private createExperimentNew(...levels: string[]): Function {
+  public createExperiment(...levels: string[]): Function {
 
     thrower({ levels })
       .check("levels").is.an.array();
+
+    if (levels.length === 0) {
+      throw new Error("At least one level is required");
+    }
+
+    for (const value of levels) {
+      if (typeof value !== "string") {
+        throw new Error("All levels must be strings");
+
+      }
+    }
 
     const me = this;
 
     function buildLevel(methodName, levels, position, callback) {
 
-      if (levels.length <= position) {
+      if (position < levels.length) {
 
         const label = levels[position];
 
         me.lab.experiment(label, () => {
+          position++;
 
-          buildLevel(methodName, levels, position++, callback);
+          buildLevel(methodName, levels, position, callback);
 
         });
 
@@ -162,7 +174,7 @@ function throwTest(obj: Object, fnc: Function, lab: Lab, values: any[], descript
 
     };
 
-    expect(throws).to.throw();
+    expect(throws).to.throw(Error);
 
     done();
 

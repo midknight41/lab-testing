@@ -43,8 +43,7 @@ Sometimes you want to represent hierarchy in your tests which, with lab, means a
 
 ### Parameters:
 
-- **service:** *string* - The top level in the hierarchy
-- **component:** *string* - The secondary level in the hierarchy
+- **...levels:** *string[]* - Any number of levels as strings
 
 ```js
 
@@ -56,9 +55,9 @@ const lab = exports.lab = Lab.script();
 const expect = Code.expect;
 const testing = getHelper(lab);
 
-const method = testing.createExperiment("Service", "Component");
+const group = testing.createExperiment("Service", "Component");
 
-method("methodOne", () => {
+group("methodOne", () => {
 
   lab.test(done => {
     return done();
