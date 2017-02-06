@@ -61,5 +61,5 @@
     "patch": "npm version patch -m \"published to npm as v%s\" && git push --follow-tags && npm publish",
     "safe": "./safe-install lab-testing"
   },
-  "version": "2.1.3"
+  "version": "2.1.4"
 }
