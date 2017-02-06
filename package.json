@@ -29,8 +29,8 @@
   "keywords": [],
   "license": "MIT",
   "main": "./dist/lib/index.js",
-  "types": "./lib/types/index.d.ts",
-  "typings": "./lib/types/index.d.ts",
+  "types": "./src/types/index.d.ts",
+  "typings": "./src/types/index.d.ts",
   "name": "lab-testing",
   "repository": {
     "type": "git",
