@@ -30,8 +30,8 @@ export default class ParameterTester {
 
   methodParameterTest(self, fnc, labels, ...params) {
 
-    assert(fnc, "self is a required argument");
-    assert(labels, "self is a required argument");
+    assert(fnc, "fnc is a required argument");
+    assert(labels, "labels is a required argument");
 
     // thrower({ self, fnc, labels, params })
     //   .check("fnc").is.a.function()
