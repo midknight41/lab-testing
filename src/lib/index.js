@@ -10,12 +10,7 @@ import * as _ from "lodash";
 
 export class LabTesting {
 
-  private lab: Lab;
-  public rejects: ParameterTester;
-  public throws: ParameterTester;
-  private constructs: ParameterTester;
-
-  constructor(lab: Lab, throwsTester: ParameterTester, rejectTester: ParameterTester, constructorTester: ParameterTester) {
+  constructor(lab, throwsTester, rejectTester, constructorTester) {
 
     thrower({ lab, throwsTester, rejectTester, constructorTester })
       .check("lab").is.an.object()
@@ -24,12 +19,12 @@ export class LabTesting {
       .check("constructorTester").is.an.object();
 
     this.lab = lab;
-    this.throws = throwsTester;
+    this.throws = throwsTester
     this.rejects = rejectTester;
     this.constructs = constructorTester;
   }
 
-  public createExperimentOld(service: string, component: string): Function {
+  createExperimentOld(service, component) {
 
     thrower({ service, component })
       .check("service").is.a.string()
@@ -37,7 +32,7 @@ export class LabTesting {
 
     const me = this;
 
-    const fnc = function (methodName: string, callback: () => void) {
+    const fnc = function (methodName, callback) {
 
       me.lab.experiment(service, () => {
         me.lab.experiment(component, () => {
@@ -49,7 +44,7 @@ export class LabTesting {
     return fnc;
   }
 
-  public createExperiment(...levels: string[]): Function {
+  createExperiment(...levels) {
 
     thrower({ levels })
       .check("levels").is.an.array();
@@ -86,7 +81,7 @@ export class LabTesting {
 
     }
 
-    const fnc = function (methodName: string, callback: () => void) {
+    const fnc = function (methodName, callback) {
 
       buildLevel(methodName, levels, 0, callback);
     };
@@ -94,7 +89,7 @@ export class LabTesting {
     return fnc;
   }
 
-  public standardContructorTest(Class, labels: string[], ...params) {
+  standardContructorTest(Class, labels, ...params) {
 
     thrower({ Class, labels, params })
       .check("Class").is.a.function()
@@ -122,24 +117,24 @@ export class LabTesting {
 
   }
 
-  public functionParameterTest(fnc: Function, labels: string[], ...params) {
+  functionParameterTest(fnc, labels, ...params) {
 
-    /* tslint:disable no-console */
+    /* eslint:disable no-console */
     console.warn("LabTesting.functionParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.functionParameterTest instead");
 
     return this.throws.methodParameterTest(null, fnc, labels, ...params);
   }
 
-  public methodParameterTest(self: Object, fnc: Function, labels: string[], ...params) {
+  methodParameterTest(self, fnc, labels, ...params) {
 
-    /* tslint:disable no-console */
+    /* eslint:disable no-console */
     console.warn("LabTesting.methodParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.methodParameterTest instead");
 
     return this.throws.methodParameterTest(self, fnc, labels, ...params);
 
   }
 
-  private substituteEntry(index: number, params: any[], value: any) {
+  substituteEntry_(index, params, value) {
 
     let copy = _.slice(params, 0, params.length);
 
@@ -150,7 +145,7 @@ export class LabTesting {
 
 }
 
-export default function getHelper(lab: Lab) {
+export default function getHelper(lab) {
 
   const throwTester = new ParameterTester(lab, throwTest, false);
   const rejectTester = new ParameterTester(lab, rejectTest, false);
@@ -160,7 +155,7 @@ export default function getHelper(lab: Lab) {
 
 }
 
-function throwTest(obj: Object, fnc: Function, lab: Lab, values: any[], description: string, fieldName: string, isClass: boolean = false) {
+function throwTest(obj, fnc, lab, values, description, fieldName, isClass = false) {
 
   lab.test(`throws on ${description} ${fieldName}`, done => {
 
@@ -181,7 +176,7 @@ function throwTest(obj: Object, fnc: Function, lab: Lab, values: any[], descript
   });
 }
 
-function rejectTest(obj: Object, fnc: Function, lab: Lab, values: any[], description: string, fieldName: string, isClass: boolean = false) {
+function rejectTest(obj, fnc, lab, values, description, fieldName, isClass = false) {
 
   lab.test(`rejects on ${description} ${fieldName}`, done => {
 

@@ -12,9 +12,6 @@ const method = testing.createExperiment("LabTesting", "rejects");
 
 class TestClass {
 
-  private one: string;
-  private two: string;
-
   constructor(one, two) {
 
     thrower({ one, two })

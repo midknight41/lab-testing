@@ -1,0 +1,85 @@
+{
+  "rules": {
+    "align": [
+      2,
+      "parameters",
+      "statements"
+    ],
+    "comment-format": [
+      2,
+      "check-space"
+    ],
+    "class-name": 2,
+    "curly": [
+      2
+    ],
+    "eofline": 2,
+    "linebreak-style": 2,
+    "indent": [2, 2],
+    "new-parens": 2,
+    "no-console": 2,
+    "no-construct": 2,
+    "no-debugger": 2,
+    "no-duplicate-variable": 2,
+    "no-empty": 2,
+    "no-eval": 2,
+    "no-internal-module": 2,
+    "no-require-imports": 2,
+    "no-switch-case-fall-through": 2,
+    "no-trailing-whitespace": 2,
+    "no-var-keyword": 2,
+    "one-line": [
+      2,
+      "check-catch",
+      "check-finally",
+      "check-else",
+      "check-open-brace",
+      "check-whitespace"
+    ],
+    "trailing-comma": [
+      2,
+      {
+        "multiline": "never",
+        "singleline": "never"
+      }
+    ],
+    "quotemark": [
+      2,
+      "double"
+    ],
+    "radix": 2,
+    "semicolon": [
+      2,
+      "always"
+    ],
+    "triple-equals": [
+      2,
+      "allow-null-check"
+    ],
+    "typedef-whitespace": [
+      2,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      }
+    ],
+    "use-isnan": 2,
+    "variable-name": [
+      2,
+      "ban-keywords"
+    ],
+    "whitespace": [
+      2,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-module",
+      "check-separator",
+      "check-type",
+      "check-typecast"
+    ]
+  }
+}
