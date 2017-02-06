@@ -77,8 +77,7 @@ lab.experiment("LabTesting", () => {
 
       try {
         testing.createExperiment();
-      }
-      catch (ex) {
+      } catch (ex) {
         expect(ex).to.be.an.error(Error, "At least one level is required");
         return done();
       }
@@ -91,8 +90,7 @@ lab.experiment("LabTesting", () => {
 
       try {
         testing.createExperiment(null, "DeepReferences");
-      }
-      catch (ex) {
+      } catch (ex) {
         expect(ex).to.be.an.error(Error, "All levels must be strings");
         return done();
       }
@@ -104,8 +102,7 @@ lab.experiment("LabTesting", () => {
 
       try {
         testing.createExperiment(undefined, "DeepReferences");
-      }
-      catch (ex) {
+      } catch (ex) {
         expect(ex).to.be.an.error(Error, "All levels must be strings");
         return done();
       }
@@ -119,8 +116,7 @@ lab.experiment("LabTesting", () => {
 
       try {
         testing.createExperiment("CheckVerify", null);
-      }
-      catch (ex) {
+      } catch (ex) {
         expect(ex).to.be.an.error(Error, "All levels must be strings");
         return done();
       }
@@ -132,8 +128,7 @@ lab.experiment("LabTesting", () => {
 
       try {
         testing.createExperiment("CheckVerify", undefined);
-      }
-      catch (ex) {
+      } catch (ex) {
         expect(ex).to.be.an.error(Error, "All levels must be strings");
         return done();
       }

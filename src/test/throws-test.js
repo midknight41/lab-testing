@@ -47,9 +47,9 @@ method("methodParameterTest", () => {
 
   lab.test("does not error when called correctly", done => {
 
-    const obj = new TestClass("one", "two");
+    const obj1 = new TestClass("one", "two");
 
-    obj.method("one", "two");
+    obj1.method("one", "two");
     return done();
 
   });
@@ -74,8 +74,9 @@ method("functionParameterTest", () => {
 
   lab.test("does not error when called correctly", done => {
 
-    const obj = new TestClass("one", "two");
+    const obj1 = new TestClass("one", "two");
 
+    expect(obj1).to.be.an.object();
     fnc("one", "two");
     return done();
 

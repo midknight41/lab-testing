@@ -1,6 +1,4 @@
 import * as Code from "code";
-import { Lab } from "lab";
-import * as Q from "q";
 // import { thrower } from "check-verify";
 import assert from "assert";
 
@@ -34,7 +32,7 @@ export default class ParameterTester {
 
     assert(fnc, "self is a required argument");
     assert(labels, "self is a required argument");
-    
+
     // thrower({ self, fnc, labels, params })
     //   .check("fnc").is.a.function()
     //   .check("labels").is.an.array()
@@ -73,7 +71,6 @@ export default class ParameterTester {
 
       const altered = this.substituteEntry_(currentId, params, values[i]);
       const description = valueDescriptions[i];
-      const behaviour = "throw";
 
       this.testContainer(obj, fnc, lab, altered, description, fieldName, this.isClass);
 
@@ -83,7 +80,7 @@ export default class ParameterTester {
 
   substituteEntry_(index, params, value) {
 
-    let copy = _.slice(params, 0, params.length);
+    const copy = _.slice(params, 0, params.length);
 
     copy[index] = value;
     return copy;

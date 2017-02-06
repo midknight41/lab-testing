@@ -1,6 +1,5 @@
+
 import * as Code from "code";
-import { Lab } from "lab";
-import * as Q from "q";
 // import { thrower } from "check-verify";
 import ParameterTester from "./ParameterTester";
 import assert from "assert";
@@ -8,6 +7,47 @@ import assert from "assert";
 const expect = Code.expect;
 
 import * as _ from "lodash";
+
+
+function construct(cls, params) {
+  return new cls(...params);
+}
+
+function throwTest(obj, fnc, lab, values, description, fieldName, isClass = false) {
+
+  lab.test(`throws on ${description} ${fieldName}`, done => {
+
+    const throws = function () {
+
+      if (isClass) {
+        construct(fnc, values);
+      } else {
+        fnc.apply(obj, values);
+      }
+
+    };
+
+    expect(throws).to.throw(Error);
+
+    done();
+
+  });
+}
+
+function rejectTest(obj, fnc, lab, values, description, fieldName) {
+
+  lab.test(`rejects on ${description} ${fieldName}`, () => {
+
+    return fnc.apply(obj, values)
+      .then(() => {
+        Code.fail("did not reject");
+      })
+      .catch(error => {
+        expect(error).to.be.an.error();
+      });
+
+  });
+}
 
 export class LabTesting {
 
@@ -25,7 +65,7 @@ export class LabTesting {
     //   .check("constructorTester").is.an.object();
 
     this.lab = lab;
-    this.throws = throwsTester
+    this.throws = throwsTester;
     this.rejects = rejectTester;
     this.constructs = constructorTester;
   }
@@ -50,16 +90,16 @@ export class LabTesting {
 
     const me = this;
 
-    function buildLevel(methodName, levels, position, callback) {
+    function buildLevel(methodName, innerLevels, position, callback) {
 
-      if (position < levels.length) {
+      if (position < innerLevels.length) {
 
-        const label = levels[position];
+        const label = innerLevels[position];
 
         me.lab.experiment(label, () => {
           position++;
 
-          buildLevel(methodName, levels, position, callback);
+          buildLevel(methodName, innerLevels, position, callback);
 
         });
 
@@ -112,16 +152,18 @@ export class LabTesting {
 
   functionParameterTest(fnc, labels, ...params) {
 
-    /* eslint:disable no-console */
+    /* eslint-disable no-console */
     console.warn("LabTesting.functionParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.functionParameterTest instead");
+    /* eslint-enable no-console */
 
     return this.throws.methodParameterTest(null, fnc, labels, ...params);
   }
 
   methodParameterTest(self, fnc, labels, ...params) {
 
-    /* eslint:disable no-console */
+    /* eslint-disable no-console */
     console.warn("LabTesting.methodParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.methodParameterTest instead");
+    /* eslint-enable no-console */
 
     return this.throws.methodParameterTest(self, fnc, labels, ...params);
 
@@ -129,7 +171,7 @@ export class LabTesting {
 
   substituteEntry_(index, params, value) {
 
-    let copy = _.slice(params, 0, params.length);
+    const copy = _.slice(params, 0, params.length);
 
     copy[index] = value;
     return copy;
@@ -148,42 +190,4 @@ export default function getHelper(lab) {
 
 }
 
-function throwTest(obj, fnc, lab, values, description, fieldName, isClass = false) {
 
-  lab.test(`throws on ${description} ${fieldName}`, done => {
-
-    const throws = function () {
-
-      if (isClass) {
-        construct(fnc, values);
-      } else {
-        fnc.apply(obj, values);
-      }
-
-    };
-
-    expect(throws).to.throw(Error);
-
-    done();
-
-  });
-}
-
-function rejectTest(obj, fnc, lab, values, description, fieldName, isClass = false) {
-
-  lab.test(`rejects on ${description} ${fieldName}`, done => {
-
-    return fnc.apply(obj, values)
-      .then(() => {
-        Code.fail("did not reject");
-      })
-      .catch(error => {
-        expect(error).to.be.an.error();
-      });
-
-  });
-}
-
-function construct(cls, params) {
-  return new cls(...params);
-};
