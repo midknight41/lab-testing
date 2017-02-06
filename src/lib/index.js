@@ -1,8 +1,9 @@
 import * as Code from "code";
 import { Lab } from "lab";
 import * as Q from "q";
-import { thrower } from "check-verify";
+// import { thrower } from "check-verify";
 import ParameterTester from "./ParameterTester";
+import assert from "assert";
 
 const expect = Code.expect;
 
@@ -12,11 +13,16 @@ export class LabTesting {
 
   constructor(lab, throwsTester, rejectTester, constructorTester) {
 
-    thrower({ lab, throwsTester, rejectTester, constructorTester })
-      .check("lab").is.an.object()
-      .check("throwsTester").is.an.object()
-      .check("rejectTester").is.an.object()
-      .check("constructorTester").is.an.object();
+    assert(lab, "lab is a required argument");
+    assert(throwsTester, "throwsTester is a required argument");
+    assert(rejectTester, "rejectTester is a required argument");
+    assert(constructorTester, "constructorTester is a required argument");
+
+    // thrower({ lab, throwsTester, rejectTester, constructorTester })
+    //   .check("lab").is.an.object()
+    //   .check("throwsTester").is.an.object()
+    //   .check("rejectTester").is.an.object()
+    //   .check("constructorTester").is.an.object();
 
     this.lab = lab;
     this.throws = throwsTester
@@ -24,30 +30,12 @@ export class LabTesting {
     this.constructs = constructorTester;
   }
 
-  createExperimentOld(service, component) {
-
-    thrower({ service, component })
-      .check("service").is.a.string()
-      .check("component").is.a.string();
-
-    const me = this;
-
-    const fnc = function (methodName, callback) {
-
-      me.lab.experiment(service, () => {
-        me.lab.experiment(component, () => {
-          me.lab.experiment(methodName, callback);
-        });
-      });
-    };
-
-    return fnc;
-  }
-
   createExperiment(...levels) {
 
-    thrower({ levels })
-      .check("levels").is.an.array();
+    assert(levels, "levels is a required argument");
+
+    // thrower({ levels })
+    //   .check("levels").is.an.array();
 
     if (levels.length === 0) {
       throw new Error("At least one level is required");
@@ -91,10 +79,15 @@ export class LabTesting {
 
   standardContructorTest(Class, labels, ...params) {
 
-    thrower({ Class, labels, params })
-      .check("Class").is.a.function()
-      .check("labels").is.an.array()
-      .optional("params").is.an.array();
+    assert(Class, "Class is a required argument");
+    assert(labels, "labels is a required argument");
+    assert(params, "params is a required argument");
+
+
+    // thrower({ Class, labels, params })
+    //   .check("Class").is.a.function()
+    //   .check("labels").is.an.array()
+    //   .optional("params").is.an.array();
 
     const lab = this.lab;
 

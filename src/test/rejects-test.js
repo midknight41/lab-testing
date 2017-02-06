@@ -2,7 +2,9 @@
 import * as Code from "code";
 import * as Lab from "lab";
 import getHelper from "../lib/index";
-import { promiser, thrower } from "check-verify";
+import assert from "assert";
+import * as Q from "q";
+// import { promiser, thrower } from "check-verify";
 
 const lab = exports.lab = Lab.script();
 const expect = Code.expect;
@@ -14,9 +16,12 @@ class TestClass {
 
   constructor(one, two) {
 
-    thrower({ one, two })
-      .check("one").is.string()
-      .check("two").is.string();
+    assert(one, "one is a required argument");
+    assert(two, "one is a required argument");
+
+    // thrower({ one, two })
+    //   .check("one").is.string()
+    //   .check("two").is.string();
 
     this.one = one;
     this.two = two;
@@ -24,10 +29,19 @@ class TestClass {
 
   method(one, two) {
 
-    return promiser()
-      .check("one").is.string()
-      .check("two").is.number()
-      .verify({ one, two });
+    try {
+      assert(one, "one is a required argument");
+      assert(two, "one is a required argument");
+      return Q.resolve(null);
+    }
+    catch (ex) {
+      return Q.reject(ex);
+    }
+
+    // return promiser()
+    //   .check("one").is.string()
+    //   .check("two").is.number()
+    //   .verify({ one, two });
 
   }
 }
@@ -52,10 +66,19 @@ method("functionParameterTest", () => {
 
   const fnc = function (one, two) {
 
-    return promiser()
-      .check("one").is.a.string()
-      .check("two").is.a.number()
-      .verify({ one, two });
+    try {
+      assert(one, "one is a required argument");
+      assert(two, "one is a required argument");
+      return Q.resolve(null);
+    }
+    catch (ex) {
+      return Q.reject(ex);
+    }
+
+    // return promiser()
+    //   .check("one").is.string()
+    //   .check("two").is.number()
+    //   .verify({ one, two });
 
   };
 

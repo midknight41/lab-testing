@@ -2,7 +2,9 @@
 import * as Code from "code";
 import * as Lab from "lab";
 import getHelper from "../lib/index";
-import { thrower } from "check-verify";
+import assert from "assert";
+
+// import { thrower } from "check-verify";
 
 const lab = exports.lab = Lab.script();
 const expect = Code.expect;
@@ -16,9 +18,12 @@ class TestClass {
 
   constructor(one, two) {
 
-    thrower({ one, two })
-      .check("one").is.string()
-      .check("two").is.string();
+    assert(one, "one is a required argument");
+    assert(two, "one is a required argument");
+
+    // thrower({ one, two })
+    //   .check("one").is.string()
+    //   .check("two").is.string();
 
     this.one = one;
     this.two = two;
@@ -26,9 +31,12 @@ class TestClass {
 
   method(one, two) {
 
-    thrower({ one, two })
-      .check("one").is.string()
-      .check("two").is.string();
+    assert(one, "one is a required argument");
+    assert(two, "one is a required argument");
+
+    // thrower({ one, two })
+    //   .check("one").is.string()
+    //   .check("two").is.string();
 
     return;
   }
@@ -149,9 +157,12 @@ lab.experiment("LabTesting", () => {
 
     const fnc = function (one, two) {
 
-      thrower({ one, two })
-        .check("one").is.string()
-        .check("two").is.string();
+      assert(one, "one is a required argument");
+      assert(two, "one is a required argument");
+
+      // thrower({ one, two })
+      //   .check("one").is.string()
+      //   .check("two").is.string();
 
       return;
     };

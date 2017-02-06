@@ -7,7 +7,6 @@
     "Chad Macey <chad_macey@hotmail.com>"
   ],
   "dependencies": {
-    "check-verify": "^1.0.0",
     "code": "^4.0.0",
     "lodash": "^4.16.6",
     "q": "^1.4.1"

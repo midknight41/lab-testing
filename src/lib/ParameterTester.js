@@ -1,7 +1,8 @@
 import * as Code from "code";
 import { Lab } from "lab";
 import * as Q from "q";
-import { thrower } from "check-verify";
+// import { thrower } from "check-verify";
+import assert from "assert";
 
 const expect = Code.expect;
 
@@ -11,10 +12,14 @@ export default class ParameterTester {
 
   constructor(lab, testContainer, isClass) {
 
-    thrower({ lab, testContainer, isClass })
-      .check("lab").is.an.object()
-      .check("testContainer").is.a.function()
-      .check("isClass").is.a.boolean();
+    assert(lab, "lab is a required argument");
+    assert(testContainer, "testContainer is a required argument");
+    // assert(isClass, "isClass is a required argument");
+
+    // thrower({ lab, testContainer, isClass })
+    //   .check("lab").is.an.object()
+    //   .check("testContainer").is.a.function()
+    //   .check("isClass").is.a.boolean();
 
     this.isClass = isClass;
     this.lab = lab;
@@ -27,11 +32,14 @@ export default class ParameterTester {
 
   methodParameterTest(self, fnc, labels, ...params) {
 
-    thrower({ self, fnc, labels, params })
-      .check("fnc").is.a.function()
-      .check("labels").is.an.array()
-      .optional("self").is.an.object()
-      .optional("params").is.an.array();
+    assert(fnc, "self is a required argument");
+    assert(labels, "self is a required argument");
+    
+    // thrower({ self, fnc, labels, params })
+    //   .check("fnc").is.a.function()
+    //   .check("labels").is.an.array()
+    //   .optional("self").is.an.object()
+    //   .optional("params").is.an.array();
 
     const lab = this.lab;
     const testType = self === null ? "function" : "method";
