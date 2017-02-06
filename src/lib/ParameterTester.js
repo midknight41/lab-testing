@@ -7,18 +7,9 @@ const expect = Code.expect;
 
 import * as _ from "lodash";
 
-export interface ParameterSpecification {
-  labels: string[];
-  params: any[];
-}
-
 export default class ParameterTester {
 
-  private lab: Lab;
-  private testContainer: Function;
-  private isClass: boolean;
-
-  constructor(lab: Lab, testContainer: Function, isClass: boolean) {
+  constructor(lab, testContainer, isClass) {
 
     thrower({ lab, testContainer, isClass })
       .check("lab").is.an.object()
@@ -30,11 +21,11 @@ export default class ParameterTester {
     this.testContainer = testContainer;
   }
 
-  public functionParameterTest(fnc: Function, labels: string[], ...params) {
+  functionParameterTest(fnc, labels, ...params) {
     return this.methodParameterTest(null, fnc, labels, ...params);
   }
 
-  public methodParameterTest(self: Object, fnc: Function, labels: string[], ...params) {
+  methodParameterTest(self, fnc, labels, ...params) {
 
     thrower({ self, fnc, labels, params })
       .check("fnc").is.a.function()
@@ -60,19 +51,19 @@ export default class ParameterTester {
 
       // Test null params
 
-      this.createTests(self, ["a null", "an undefined"], [null, undefined], params, i, label, fnc);
+      this.createTests_(self, ["a null", "an undefined"], [null, undefined], params, i, label, fnc);
 
     }
 
   }
 
-  private createTests(obj: Object, valueDescriptions: string[], values: any[], params: any[], currentId: number, fieldName: string, fnc: Function) {
+  createTests_(obj, valueDescriptions, values, params, currentId, fieldName, fnc) {
 
     const lab = this.lab;
 
     for (let i = 0; i < values.length; i++) {
 
-      const altered = this.substituteEntry(currentId, params, values[i]);
+      const altered = this.substituteEntry_(currentId, params, values[i]);
       const description = valueDescriptions[i];
       const behaviour = "throw";
 
@@ -82,7 +73,7 @@ export default class ParameterTester {
 
   }
 
-  private substituteEntry(index: number, params: any[], value: any) {
+  substituteEntry_(index, params, value) {
 
     let copy = _.slice(params, 0, params.length);
 

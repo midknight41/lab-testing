@@ -1,6 +1,8 @@
 {
-  "plugins": [
-    "transform-es2015-parameters",
-    "babel-plugin-transform-es2015-spread"
-  ]
+  "presets": ["es2015"],
+  "sourceMaps": "both",
+
+  "ast": false,
+  "comments": true,
+  "minified": false
 }
