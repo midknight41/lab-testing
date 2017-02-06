@@ -24,13 +24,14 @@
     "sinon": "^1.17.6"
   },
   "files": [
-    "dist"
+    "dist",
+    "types"
   ],
   "keywords": [],
   "license": "MIT",
   "main": "./dist/lib/index.js",
-  "types": "./src/types/index.d.ts",
-  "typings": "./src/types/index.d.ts",
+  "types": "./types/index.d.ts",
+  "typings": "./types/index.d.ts",
   "name": "lab-testing",
   "repository": {
     "type": "git",

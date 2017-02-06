@@ -6,7 +6,6 @@ export declare class LabTesting {
     throws: ParameterTester;
     private constructs;
     constructor(lab: Lab, throwsTester: ParameterTester, rejectTester: ParameterTester, constructorTester: ParameterTester);
-    createExperimentOld(service: string, component: string): Function;
     createExperiment(...levels: string[]): Function;
     standardContructorTest(Class: any, labels: string[], ...params: any[]): void;
     functionParameterTest(fnc: Function, labels: string[], ...params: any[]): void;
