@@ -1,5 +1,7 @@
 # lab-testing
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/midknight41/lab-testing.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/midknight41/lab-testing.svg?branch=master)](https://travis-ci.org/midknight41/lab-testing) [![Coverage Status](https://coveralls.io/repos/github/midknight41/lab-testing/badge.svg?branch=master)](https://coveralls.io/github/midknight41/lab-testing?branch=master)
 [![Deps](https://david-dm.org/midknight41/lab-testing.svg)](https://david-dm.org/midknight41/lab-testing?info=dependencies) [![devDependency Status](https://david-dm.org/midknight41/lab-testing/dev-status.svg)](https://david-dm.org/midknight41/lab-testing?info=devDependencies)
 
