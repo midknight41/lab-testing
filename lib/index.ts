@@ -94,7 +94,38 @@ export class LabTesting {
     return fnc;
   }
 
+  public standardConstructorTest(Class, labels: string[], ...params) {
+
+    thrower({ Class, labels, params })
+      .check("Class").is.a.function()
+      .check("labels").is.an.array()
+      .optional("params").is.an.array();
+
+    const lab = this.lab;
+
+    lab.test("ran the standard contructor test properly", done => {
+      expect(labels.length).to.equal(params.length);
+      done();
+    });
+
+    lab.test("returns an object when constructed properly", done => {
+
+      const me = {};
+      construct(Class, params);
+
+      expect(me).to.be.an.object();
+      done();
+
+    });
+
+    this.constructs.methodParameterTest({}, Class, labels, ...params);
+
+  }
+
   public standardContructorTest(Class, labels: string[], ...params) {
+
+    /* tslint:disable no-console */
+    console.warn("LabTesting.standardContructorTest is deprecated (spelling error) and will be remove in future versions. Use LabTesting.standardConstructorTest instead.");
 
     thrower({ Class, labels, params })
       .check("Class").is.a.function()
@@ -125,7 +156,7 @@ export class LabTesting {
   public functionParameterTest(fnc: Function, labels: string[], ...params) {
 
     /* tslint:disable no-console */
-    console.warn("LabTesting.functionParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.functionParameterTest instead");
+    console.warn("LabTesting.functionParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.functionParameterTest instead.");
 
     return this.throws.methodParameterTest(null, fnc, labels, ...params);
   }
@@ -133,7 +164,7 @@ export class LabTesting {
   public methodParameterTest(self: Object, fnc: Function, labels: string[], ...params) {
 
     /* tslint:disable no-console */
-    console.warn("LabTesting.methodParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.methodParameterTest instead");
+    console.warn("LabTesting.methodParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.methodParameterTest instead.");
 
     return this.throws.methodParameterTest(self, fnc, labels, ...params);
 

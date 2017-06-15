@@ -139,6 +139,11 @@ lab.experiment("LabTesting", () => {
 
   });
 
+  lab.experiment("standardConstructorTest", () => {
+    testing.standardConstructorTest(TestClass, ["one", "two"], "one", "two");
+
+  });
+
   lab.experiment("standardContructorTest", () => {
     testing.standardContructorTest(TestClass, ["one", "two"], "one", "two");
 
