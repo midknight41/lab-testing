@@ -13,6 +13,7 @@ npm install lab-testing --save-dev
 
 **lab-testing** contains two namespaces: ```throws``` and ```rejects```. The contain the same tests with ```throws``` used to test synchronous messages and ```rejects``` used to test promises. In addition, there are a few top levels tests too.
 
+See [Change Log](./CHANGELOG.md) for changes from previous versions.
 
 ## Standard Constructor Test
 Executes basic tests for nulls and undefined against all constructor parameters.
