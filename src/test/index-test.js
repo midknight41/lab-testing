@@ -2,7 +2,9 @@
 import * as Code from "code";
 import * as Lab from "lab";
 import getHelper from "../lib/index";
-import { thrower } from "check-verify";
+import assert from "assert";
+
+// import { thrower } from "check-verify";
 
 const lab = exports.lab = Lab.script();
 const expect = Code.expect;
@@ -14,14 +16,14 @@ const oneLevel = testing.createExperiment("Root");
 
 class TestClass {
 
-  private one: string;
-  private two: string;
-
   constructor(one, two) {
 
-    thrower({ one, two })
-      .check("one").is.string()
-      .check("two").is.string();
+    assert(one, "one is a required argument");
+    assert(two, "one is a required argument");
+
+    // thrower({ one, two })
+    //   .check("one").is.string()
+    //   .check("two").is.string();
 
     this.one = one;
     this.two = two;
@@ -29,9 +31,12 @@ class TestClass {
 
   method(one, two) {
 
-    thrower({ one, two })
-      .check("one").is.string()
-      .check("two").is.string();
+    assert(one, "one is a required argument");
+    assert(two, "one is a required argument");
+
+    // thrower({ one, two })
+    //   .check("one").is.string()
+    //   .check("two").is.string();
 
     return;
   }
@@ -72,8 +77,7 @@ lab.experiment("LabTesting", () => {
 
       try {
         testing.createExperiment();
-      }
-      catch (ex) {
+      } catch (ex) {
         expect(ex).to.be.an.error(Error, "At least one level is required");
         return done();
       }
@@ -86,8 +90,7 @@ lab.experiment("LabTesting", () => {
 
       try {
         testing.createExperiment(null, "DeepReferences");
-      }
-      catch (ex) {
+      } catch (ex) {
         expect(ex).to.be.an.error(Error, "All levels must be strings");
         return done();
       }
@@ -99,8 +102,7 @@ lab.experiment("LabTesting", () => {
 
       try {
         testing.createExperiment(undefined, "DeepReferences");
-      }
-      catch (ex) {
+      } catch (ex) {
         expect(ex).to.be.an.error(Error, "All levels must be strings");
         return done();
       }
@@ -114,8 +116,7 @@ lab.experiment("LabTesting", () => {
 
       try {
         testing.createExperiment("CheckVerify", null);
-      }
-      catch (ex) {
+      } catch (ex) {
         expect(ex).to.be.an.error(Error, "All levels must be strings");
         return done();
       }
@@ -127,8 +128,7 @@ lab.experiment("LabTesting", () => {
 
       try {
         testing.createExperiment("CheckVerify", undefined);
-      }
-      catch (ex) {
+      } catch (ex) {
         expect(ex).to.be.an.error(Error, "All levels must be strings");
         return done();
       }
@@ -157,9 +157,12 @@ lab.experiment("LabTesting", () => {
 
     const fnc = function (one, two) {
 
-      thrower({ one, two })
-        .check("one").is.string()
-        .check("two").is.string();
+      assert(one, "one is a required argument");
+      assert(two, "one is a required argument");
+
+      // thrower({ one, two })
+      //   .check("one").is.string()
+      //   .check("two").is.string();
 
       return;
     };
