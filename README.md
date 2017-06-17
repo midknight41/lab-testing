@@ -69,6 +69,27 @@ group("methodOne", () => {
 });
 ```
 
+The created function also supports ```skip``` and ```only```.
+
+```js
+group.skip("methodOne", () => {
+
+  lab.test(done => {
+    return done();
+  });
+
+});
+
+group.only("methodOne", () => {
+
+  lab.test(done => {
+    return done();
+  });
+
+});
+```
+
+
 ## Function Parameter Test
 Executes basic tests for nulls and undefined against all function parameters.
 

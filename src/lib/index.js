@@ -70,6 +70,10 @@ export class LabTesting {
     // thrower({ levels })
     //   .check("levels").is.an.array();
 
+    const NORMAL_MODE = 0;
+    const SKIP_MODE = 1;
+    const ONLY_MODE = 2;
+
     if (levels.length === 0) {
       throw new Error("At least one level is required");
     }
@@ -83,7 +87,7 @@ export class LabTesting {
 
     const me = this;
 
-    function buildLevel(methodName, innerLevels, position, callback) {
+    function buildLevel(methodName, innerLevels, position, callback, mode) {
 
       if (position < innerLevels.length) {
 
@@ -92,20 +96,40 @@ export class LabTesting {
         me.lab.experiment(label, () => {
           position++;
 
-          buildLevel(methodName, innerLevels, position, callback);
+          buildLevel(methodName, innerLevels, position, callback, mode);
 
         });
 
       } else {
+
+        if (mode === SKIP_MODE) {
+          me.lab.experiment.skip(methodName, callback);
+          return;
+        }
+
+        if (mode === ONLY_MODE) {
+          me.lab.experiment.only(methodName, callback);
+          return;
+        }
+
         me.lab.experiment(methodName, callback);
       }
 
     }
 
     const fnc = function (methodName, callback) {
-
-      buildLevel(methodName, levels, 0, callback);
+      buildLevel(methodName, levels, 0, callback, NORMAL_MODE);
     };
+
+    const skip = function (methodName, callback) {
+      buildLevel(methodName, levels, 0, callback, SKIP_MODE);
+    };
+    const only = function (methodName, callback) {
+      buildLevel(methodName, levels, 0, callback, ONLY_MODE);
+    };
+
+    fnc.skip = skip;
+    fnc.only = only;
 
     return fnc;
   }
