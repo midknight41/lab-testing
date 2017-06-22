@@ -2,7 +2,6 @@
 import * as Lab from "lab";
 import getHelper from "../lib/index";
 import assert from "assert";
-// import { thrower } from "check-verify";
 
 const lab = exports.lab = Lab.script();
 const testing = getHelper(lab);
@@ -14,11 +13,7 @@ class TestClass {
   constructor(one, two) {
 
     assert(one, "one is a required argument");
-    assert(two, "one is a required argument");
-
-    // thrower({ one, two })
-    //   .check("one").is.string()
-    //   .check("two").is.string();
+    assert(two, "two is a required argument");
 
     this.one = one;
     this.two = two;
@@ -27,11 +22,7 @@ class TestClass {
   method(one, two) {
 
     assert(one, "one is a required argument");
-    assert(two, "one is a required argument");
-
-    // thrower({ one, two })
-    //   .check("one").is.string()
-    //   .check("two").is.string();
+    assert(two, "two is a required argument");
 
     return;
   }
@@ -39,11 +30,7 @@ class TestClass {
   destructuredMethod({one, two}) {
 
     assert(one, "one is a required argument");
-    assert(two, "one is a required argument");
-
-    // thrower({ one, two })
-    //   .check("one").is.string()
-    //   .check("two").is.string();
+    assert(two, "two is a required argument");
 
     return;
   }
@@ -92,11 +79,7 @@ method("functionParameterTest", () => {
   const fnc = function (one, two) {
 
     assert(one, "one is a required argument");
-    assert(two, "one is a required argument");
-
-    // thrower({ one, two })
-    //   .check("one").is.string()
-    //   .check("two").is.string();
+    assert(two, "two is a required argument");
 
     return;
   };
@@ -117,11 +100,7 @@ method("functionDestructuredParameterTest", () => {
   const fnc = function ({one, two}) {
 
     assert(one, "one is a required argument");
-    assert(two, "one is a required argument");
-
-    // thrower({ one, two })
-    //   .check("one").is.string()
-    //   .check("two").is.string();
+    assert(two, "two is a required argument");
 
     return;
   };

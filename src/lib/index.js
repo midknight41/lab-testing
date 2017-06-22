@@ -70,8 +70,6 @@ export class LabTesting {
 
     assert(levels, "levels is a required argument");
 
-    // thrower({ levels })
-    //   .check("levels").is.an.array();
 
     const NORMAL_MODE = 0;
     const SKIP_MODE = 1;
@@ -200,6 +198,11 @@ export class LabTesting {
     assert(validParam, "validParam is a required argument");
 
     const lab = this.lab;
+
+    lab.test("ran the desctructured constructor test properly", done => {
+      expect(validParam).to.be.an.object();
+      done();
+    });
 
     lab.test("returns an object when constructed properly", done => {
 

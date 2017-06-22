@@ -3,7 +3,6 @@ import * as Lab from "lab";
 import getHelper from "../lib/index";
 import assert from "assert";
 import * as Q from "q";
-// import { promiser, thrower } from "check-verify";
 
 const lab = exports.lab = Lab.script();
 const testing = getHelper(lab);
@@ -15,11 +14,7 @@ class TestClass {
   constructor(one, two) {
 
     assert(one, "one is a required argument");
-    assert(two, "one is a required argument");
-
-    // thrower({ one, two })
-    //   .check("one").is.string()
-    //   .check("two").is.string();
+    assert(two, "two is a required argument");
 
     this.one = one;
     this.two = two;
@@ -29,16 +24,11 @@ class TestClass {
 
     try {
       assert(one, "one is a required argument");
-      assert(two, "one is a required argument");
+      assert(two, "two is a required argument");
       return Q.resolve(null);
     } catch (ex) {
       return Q.reject(ex);
     }
-
-    // return promiser()
-    //   .check("one").is.string()
-    //   .check("two").is.number()
-    //   .verify({ one, two });
 
   }
 
@@ -46,16 +36,11 @@ class TestClass {
 
     try {
       assert(one, "one is a required argument");
-      assert(two, "one is a required argument");
+      assert(two, "two is a required argument");
       return Q.resolve(null);
     } catch (ex) {
       return Q.reject(ex);
     }
-
-    // return promiser()
-    //   .check("one").is.string()
-    //   .check("two").is.number()
-    //   .verify({ one, two });
 
   }
 }
@@ -103,16 +88,11 @@ method("functionParameterTest", () => {
 
     try {
       assert(one, "one is a required argument");
-      assert(two, "one is a required argument");
+      assert(two, "two is a required argument");
       return Q.resolve(null);
     } catch (ex) {
       return Q.reject(ex);
     }
-
-    // return promiser()
-    //   .check("one").is.string()
-    //   .check("two").is.number()
-    //   .verify({ one, two });
 
   };
 
@@ -132,16 +112,11 @@ method("functionDestructuredParameterTest", () => {
 
     try {
       assert(one, "one is a required argument");
-      assert(two, "one is a required argument");
+      assert(two, "two is a required argument");
       return Q.resolve(null);
     } catch (ex) {
       return Q.reject(ex);
     }
-
-    // return promiser()
-    //   .check("one").is.string()
-    //   .check("two").is.number()
-    //   .verify({ one, two });
 
   };
 
