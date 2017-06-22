@@ -28,8 +28,8 @@ export default class ParameterTester {
     return this.methodParameterTest(null, fnc, labels, ...params);
   }
 
-  functionDestructuredParameterTest(fnc, inputArgs) {
-    return this.methodDestructuredParameterTest(null, fnc, inputArgs);
+  functionDestructuredParameterTest(fnc, validParam) {
+    return this.methodDestructuredParameterTest(null, fnc, validParam);
   }
 
   methodParameterTest(self, fnc, labels, ...params) {
@@ -67,14 +67,14 @@ export default class ParameterTester {
 
   }
 
-  methodDestructuredParameterTest(self, fnc, inputArgs) {
+  methodDestructuredParameterTest(self, fnc, validParam) {
 
     assert(fnc, "fnc is a required argument");
-    assert(inputArgs, "inputArgs is a required argument");
+    assert(validParam, "validParam is a required argument");
 
-    for (const key of _.keys(inputArgs)) {
+    for (const key of _.keys(validParam)) {
 
-      this.createTests_(self, ["a null", "an undefined"], [null, undefined], inputArgs, key, key, fnc);
+      this.createTests_(self, ["a null", "an undefined"], [null, undefined], validParam, key, key, fnc);
     }
   }
 

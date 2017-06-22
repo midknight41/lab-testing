@@ -145,7 +145,7 @@ export class LabTesting {
 
     const lab = this.lab;
 
-    lab.test("ran the standard contructor test properly", done => {
+    lab.test("ran the standard constructor test properly", done => {
       expect(labels.length).to.equal(params.length);
       done();
     });
@@ -192,10 +192,6 @@ export class LabTesting {
 
     this.constructs.methodParameterTest({}, Class, labels, ...params);
 
-  }
-
-  standardConstructorTest(...args) {
-    this.standardContructorTest(...args);
   }
 
   destructuredConstructorTest(Class, validParam) {
