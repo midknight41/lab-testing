@@ -17,7 +17,7 @@ class TestClass {
   constructor(one, two) {
 
     assert(one, "one is a required argument");
-    assert(two, "one is a required argument");
+    assert(two, "two is a required argument");
 
     this.one = one;
     this.two = two;
@@ -26,9 +26,21 @@ class TestClass {
   method(one, two) {
 
     assert(one, "one is a required argument");
-    assert(two, "one is a required argument");
+    assert(two, "two is a required argument");
 
     return;
+  }
+}
+
+class TestDestructClass {
+
+  constructor({one, two}) {
+
+    assert(one, "one is a required argument");
+    assert(two, "two is a required argument");
+
+    this.one = one;
+    this.two = two;
   }
 }
 
@@ -158,6 +170,12 @@ lab.experiment("LabTesting", () => {
 
   });
 
+  lab.experiment("destructuredConstructorTest", () => {
+    testing.destructuredConstructorTest(TestDestructClass, {"one": "one", "two": "two"});
+
+  });
+
+
   lab.experiment("deprecated code works with warnings", () => {
 
     const obj = new TestClass("one", "two");
@@ -167,11 +185,7 @@ lab.experiment("LabTesting", () => {
     const fnc = function (one, two) {
 
       assert(one, "one is a required argument");
-      assert(two, "one is a required argument");
-
-      // thrower({ one, two })
-      //   .check("one").is.string()
-      //   .check("two").is.string();
+      assert(two, "two is a required argument");
 
       return;
     };

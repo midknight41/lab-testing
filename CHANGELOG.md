@@ -1,5 +1,9 @@
 # Changes
 
+### 2.3.0
+
+Added ```destructuredConstructorTest```, ```functionDestructuredParameterTest```, ```methodDestructuredParameterTest``` to allow for testing where destructured parameters are used.
+
 ### 2.2.0
 
 Added skip and only capabilities to ```createExperiment```.

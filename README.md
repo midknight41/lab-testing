@@ -34,9 +34,32 @@ import getHelper from "lab-testing";
 const lab = exports.lab = Lab.script();
 const testing = getHelper(lab);
 
-lab.experiment("standardContructorTest", () => {
+lab.experiment("standardConstructorTest", () => {
 
-  testing.standardContructorTest(TestClass, ["one", "two"], "one", "two");
+  testing.standardConstructorTest(TestClass, ["one", "two"], "one", "two");
+
+});
+```
+
+## Destructured Constructor Test
+Executes basic tests for nulls and undefined against all constructor object properties.
+
+### Parameters:
+
+- **class:** *Class* - The class to instantiate
+- **validParam:** *Object* - a valid argument object
+
+```js
+import * as Code from "code";
+import * as Lab from "lab";
+import getHelper from "lab-testing";
+
+const lab = exports.lab = Lab.script();
+const testing = getHelper(lab);
+
+lab.experiment("destructuredConstructorTest", () => {
+
+  testing.destructuredConstructorTest(TestClass, {"one": "one", "two": "two"});
 
 });
 ```
@@ -146,6 +169,62 @@ lab.experiment("functionParameterTest", () => {
 });
 ```
 
+
+## Function Destructured Parameter Test
+Executes basic tests for nulls and undefined against all properties of the function parameter object.
+
+### Parameters:
+
+- **function:** *Function* - The function to test
+- **validParam:** *object* - valid argument object to pass to the function
+
+### Testing for Thrown Exceptions
+
+```js
+import * as Lab from "lab";
+import getHelper from "lab-testing";
+
+const lab = exports.lab = Lab.script();
+const testing = getHelper(lab);
+
+lab.experiment("functionDestructuredParameterTest", () => {
+
+  const fnc = function ({one, two}) {
+
+    // no parameter checks! This will fail some tests
+    return;
+  };
+
+  testing.throws.functionDestructuredParameterTest(fnc, {"one": "one", "two": "two"});
+
+});
+```
+
+### Testing for Rejected Promises
+
+```js
+import * as Lab from "lab";
+import getHelper from "lab-testing";
+
+const lab = exports.lab = Lab.script();
+const testing = getHelper(lab);
+
+lab.experiment("functionDestructuredParameterTest", () => {
+
+  const fnc = function ({one, two}) {
+
+    // no parameter checks! This will fail some tests
+    return new Promise((resolve, reject) => {
+      return resolve({one, two});
+    });
+
+  };
+
+  testing.rejects.functionDestructuredParameterTest(fnc, {"one": "one", "two": "two"});
+
+});
+```
+
 ## Method Parameter Test
 Executes basic tests for nulls and undefined against all method parameters.
 
@@ -212,3 +291,68 @@ lab.experiment("methodParameterTest", () => {
 });
 ```
 
+
+## Method Destructured Parameter Test
+Executes basic tests for nulls and undefined against all properties of the method parameter object.
+
+### Parameters:
+
+- **object:** *Object* - The instance of a class
+- **function:** *Function* - The method on that instance
+- **validParam:** *object* - valid argument object to pass to the method
+
+### Testing for Thrown Exceptions
+
+```js
+import * as Lab from "lab";
+import getHelper from "lab-testing";
+
+const lab = exports.lab = Lab.script();
+const testing = getHelper(lab);
+
+class TestClass {
+
+  method({one, two}) {
+
+    // no parameter checks! This will fail some tests
+    return;      
+  }
+}
+
+lab.experiment("methodDestructuredParameterTest", () => {
+
+  const obj = new TestClass();
+
+  testing.throws.methodDestructuredParameterTest(obj, obj.method, {"one": "one", "two": "two"});
+
+});
+```
+
+### Testing for Rejected Promises
+
+```js
+import * as Lab from "lab";
+import getHelper from "lab-testing";
+
+const lab = exports.lab = Lab.script();
+const testing = getHelper(lab);
+
+class TestClass {
+
+  method({one, two}) {
+
+    // no parameter checks! This will fail some tests
+    return new Promise((resolve, reject) => {
+      return resolve({one, two});
+    });      
+  }
+}
+
+lab.experiment("methodDestructuredParameterTest", () => {
+
+  const obj = new TestClass("one", "two");
+
+  testing.rejects.methodDestructuredParameterTest(obj, obj.method, {"one": "one", "two": "two"});
+
+});
+```
