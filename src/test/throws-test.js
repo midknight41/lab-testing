@@ -1,12 +1,10 @@
 // Testing Framework
-import * as Code from "code";
 import * as Lab from "lab";
 import getHelper from "../lib/index";
 import assert from "assert";
 // import { thrower } from "check-verify";
 
 const lab = exports.lab = Lab.script();
-const expect = Code.expect;
 const testing = getHelper(lab);
 
 const method = testing.createExperiment("LabTesting", "throws");
@@ -37,6 +35,18 @@ class TestClass {
 
     return;
   }
+
+  destructuredMethod({one, two}) {
+
+    assert(one, "one is a required argument");
+    assert(two, "one is a required argument");
+
+    // thrower({ one, two })
+    //   .check("one").is.string()
+    //   .check("two").is.string();
+
+    return;
+  }
 }
 
 method("methodParameterTest", () => {
@@ -50,6 +60,27 @@ method("methodParameterTest", () => {
     const obj1 = new TestClass("one", "two");
 
     obj1.method("one", "two");
+    return done();
+
+  });
+
+});
+
+method("methodDestructuredParameterTest", () => {
+
+  const obj = new TestClass("one", "two");
+  const validArgs = {
+    "one": "one",
+    "two": "two"
+  };
+
+  testing.throws.methodDestructuredParameterTest(obj, obj.destructuredMethod, validArgs);
+
+  lab.test("does not error when called correctly", done => {
+
+    const obj1 = new TestClass("one", "two");
+
+    obj1.destructuredMethod(validArgs);
     return done();
 
   });
@@ -74,10 +105,37 @@ method("functionParameterTest", () => {
 
   lab.test("does not error when called correctly", done => {
 
-    const obj1 = new TestClass("one", "two");
-
-    expect(obj1).to.be.an.object();
     fnc("one", "two");
+    return done();
+
+  });
+
+});
+
+method("functionDestructuredParameterTest", () => {
+
+  const fnc = function ({one, two}) {
+
+    assert(one, "one is a required argument");
+    assert(two, "one is a required argument");
+
+    // thrower({ one, two })
+    //   .check("one").is.string()
+    //   .check("two").is.string();
+
+    return;
+  };
+
+  const validArgs = {
+    "one": "one",
+    "two": "two"
+  };
+
+  testing.throws.functionDestructuredParameterTest(fnc, validArgs);
+
+  lab.test("does not error when called correctly", done => {
+
+    fnc(validArgs);
     return done();
 
   });

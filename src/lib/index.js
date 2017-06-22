@@ -10,7 +10,10 @@ import * as _ from "lodash";
 
 
 function construct(cls, params) {
-  return new cls(...params);
+  if (Array.isArray(params)) {
+    return new cls(...params);
+  }
+  return new cls(params);
 }
 
 function throwTest(obj, fnc, lab, values, description, fieldName, isClass = false) {
@@ -38,7 +41,7 @@ function rejectTest(obj, fnc, lab, values, description, fieldName) {
 
   lab.test(`rejects on ${description} ${fieldName}`, () => {
 
-    return fnc.apply(obj, values)
+    return fnc.call(obj, values)
       .then(() => {
         Code.fail("did not reject");
       })
@@ -150,6 +153,30 @@ export class LabTesting {
 
   }
 
+  standardConstructorTest(...args) {
+    this.standardContructorTest(...args);
+  }
+
+  destructuredConstructorTest(Class, validParam) {
+
+    assert(Class, "Class is a required argument");
+    assert(validParam, "validParam is a required argument");
+
+    const lab = this.lab;
+
+    lab.test("returns an object when constructed properly", done => {
+
+      const me = {};
+      construct(Class, validParam);
+
+      expect(me).to.be.an.object();
+      done();
+
+    });
+
+    this.constructs.methodDestructuredParameterTest({}, Class, validParam);
+  }
+
   functionParameterTest(fnc, labels, ...params) {
 
     /* eslint-disable no-console */
@@ -189,5 +216,3 @@ export default function getHelper(lab) {
   return new LabTesting(lab, throwTester, rejectTester, constructorTester);
 
 }
-
-

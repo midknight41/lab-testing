@@ -42,6 +42,22 @@ class TestClass {
   }
 }
 
+class TestDestructClass {
+
+  constructor({one, two}) {
+
+    assert(one, "one is a required argument");
+    assert(two, "one is a required argument");
+
+    // thrower({ one, two })
+    //   .check("one").is.string()
+    //   .check("two").is.string();
+
+    this.one = one;
+    this.two = two;
+  }
+}
+
 method("createExperiment", () => {
 
   lab.test("The function returned will execute tests  with structure of Root, Main", done => {
@@ -143,6 +159,17 @@ lab.experiment("LabTesting", () => {
     testing.standardContructorTest(TestClass, ["one", "two"], "one", "two");
 
   });
+
+  lab.experiment("standardConstructorTest", () => {
+    testing.standardConstructorTest(TestClass, ["one", "two"], "one", "two");
+
+  });
+
+  lab.experiment("destructuredConstructorTest", () => {
+    testing.destructuredConstructorTest(TestDestructClass, {"one": "one", "two": "two"});
+
+  });
+
 
   lab.experiment("deprecated code works with warnings", () => {
 

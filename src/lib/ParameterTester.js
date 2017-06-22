@@ -28,6 +28,10 @@ export default class ParameterTester {
     return this.methodParameterTest(null, fnc, labels, ...params);
   }
 
+  functionDestructuredParameterTest(fnc, inputArgs) {
+    return this.methodDestructuredParameterTest(null, fnc, inputArgs);
+  }
+
   methodParameterTest(self, fnc, labels, ...params) {
 
     assert(fnc, "fnc is a required argument");
@@ -63,6 +67,17 @@ export default class ParameterTester {
 
   }
 
+  methodDestructuredParameterTest(self, fnc, inputArgs) {
+
+    assert(fnc, "fnc is a required argument");
+    assert(inputArgs, "inputArgs is a required argument");
+
+    for (const key of _.keys(inputArgs)) {
+
+      this.createTests_(self, ["a null", "an undefined"], [null, undefined], inputArgs, key, key, fnc);
+    }
+  }
+
   createTests_(obj, valueDescriptions, values, params, currentId, fieldName, fnc) {
 
     const lab = this.lab;
@@ -80,7 +95,7 @@ export default class ParameterTester {
 
   substituteEntry_(index, params, value) {
 
-    const copy = _.slice(params, 0, params.length);
+    const copy = _.clone(params);
 
     copy[index] = value;
     return copy;
