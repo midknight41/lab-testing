@@ -1,6 +1,5 @@
 
 import * as Code from "code";
-// import { thrower } from "check-verify";
 import ParameterTester from "./ParameterTester";
 import assert from "assert";
 
@@ -61,12 +60,6 @@ export class LabTesting {
     assert(rejectTester, "rejectTester is a required argument");
     assert(constructorTester, "constructorTester is a required argument");
 
-    // thrower({ lab, throwsTester, rejectTester, constructorTester })
-    //   .check("lab").is.an.object()
-    //   .check("throwsTester").is.an.object()
-    //   .check("rejectTester").is.an.object()
-    //   .check("constructorTester").is.an.object();
-
     this.lab = lab;
     this.throws = throwsTester;
     this.rejects = rejectTester;
@@ -79,6 +72,10 @@ export class LabTesting {
 
     // thrower({ levels })
     //   .check("levels").is.an.array();
+
+    const NORMAL_MODE = 0;
+    const SKIP_MODE = 1;
+    const ONLY_MODE = 2;
 
     if (levels.length === 0) {
       throw new Error("At least one level is required");
@@ -93,7 +90,7 @@ export class LabTesting {
 
     const me = this;
 
-    function buildLevel(methodName, innerLevels, position, callback) {
+    function buildLevel(methodName, innerLevels, position, callback, mode) {
 
       if (position < innerLevels.length) {
 
@@ -102,39 +99,83 @@ export class LabTesting {
         me.lab.experiment(label, () => {
           position++;
 
-          buildLevel(methodName, innerLevels, position, callback);
+          buildLevel(methodName, innerLevels, position, callback, mode);
 
         });
 
       } else {
+
+        if (mode === SKIP_MODE) {
+          me.lab.experiment.skip(methodName, callback);
+          return;
+        }
+
+        if (mode === ONLY_MODE) {
+          me.lab.experiment.only(methodName, callback);
+          return;
+        }
+
         me.lab.experiment(methodName, callback);
       }
 
     }
 
     const fnc = function (methodName, callback) {
-
-      buildLevel(methodName, levels, 0, callback);
+      buildLevel(methodName, levels, 0, callback, NORMAL_MODE);
     };
+
+    const skip = function (methodName, callback) {
+      buildLevel(methodName, levels, 0, callback, SKIP_MODE);
+    };
+    const only = function (methodName, callback) {
+      buildLevel(methodName, levels, 0, callback, ONLY_MODE);
+    };
+
+    fnc.skip = skip;
+    fnc.only = only;
 
     return fnc;
   }
 
-  standardContructorTest(Class, labels, ...params) {
+  standardConstructorTest(Class, labels, ...params) {
 
     assert(Class, "Class is a required argument");
     assert(labels, "labels is a required argument");
     assert(params, "params is a required argument");
 
-
-    // thrower({ Class, labels, params })
-    //   .check("Class").is.a.function()
-    //   .check("labels").is.an.array()
-    //   .optional("params").is.an.array();
-
     const lab = this.lab;
 
     lab.test("ran the standard contructor test properly", done => {
+      expect(labels.length).to.equal(params.length);
+      done();
+    });
+
+    lab.test("returns an object when constructed properly", done => {
+
+      const me = {};
+      construct(Class, params);
+
+      expect(me).to.be.an.object();
+      done();
+
+    });
+
+    this.constructs.methodParameterTest({}, Class, labels, ...params);
+
+  }
+
+  standardContructorTest(Class, labels, ...params) {
+
+    /* eslint-disable no-console */
+    console.warn("LabTesting.standardContructorTest is deprecated (spelling error) and will be remove in future versions. Use LabTesting.standardConstructorTest instead.");
+
+    assert(Class, "Class is a required argument");
+    assert(labels, "labels is a required argument");
+    assert(params, "params is a required argument");
+
+    const lab = this.lab;
+
+    lab.test("ran the standard constructor test properly", done => {
       expect(labels.length).to.equal(params.length);
       done();
     });
@@ -180,8 +221,7 @@ export class LabTesting {
   functionParameterTest(fnc, labels, ...params) {
 
     /* eslint-disable no-console */
-    console.warn("LabTesting.functionParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.functionParameterTest instead");
-    /* eslint-enable no-console */
+    console.warn("LabTesting.functionParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.functionParameterTest instead.");
 
     return this.throws.methodParameterTest(null, fnc, labels, ...params);
   }
@@ -189,8 +229,7 @@ export class LabTesting {
   methodParameterTest(self, fnc, labels, ...params) {
 
     /* eslint-disable no-console */
-    console.warn("LabTesting.methodParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.methodParameterTest instead");
-    /* eslint-enable no-console */
+    console.warn("LabTesting.methodParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.methodParameterTest instead.");
 
     return this.throws.methodParameterTest(self, fnc, labels, ...params);
 

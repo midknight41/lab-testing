@@ -4,8 +4,6 @@ import * as Lab from "lab";
 import getHelper from "../lib/index";
 import assert from "assert";
 
-// import { thrower } from "check-verify";
-
 const lab = exports.lab = Lab.script();
 const expect = Code.expect;
 const testing = getHelper(lab);
@@ -21,10 +19,6 @@ class TestClass {
     assert(one, "one is a required argument");
     assert(two, "one is a required argument");
 
-    // thrower({ one, two })
-    //   .check("one").is.string()
-    //   .check("two").is.string();
-
     this.one = one;
     this.two = two;
   }
@@ -33,10 +27,6 @@ class TestClass {
 
     assert(one, "one is a required argument");
     assert(two, "one is a required argument");
-
-    // thrower({ one, two })
-    //   .check("one").is.string()
-    //   .check("two").is.string();
 
     return;
   }
@@ -76,6 +66,15 @@ deepLevels("createExperiment", () => {
   });
 });
 
+deepLevels.skip("createExperiment", () => {
+
+  lab.test("The function returned will skip tests with structure of Root, One, Two, Three, Pass", done => {
+
+    return done();
+
+  });
+});
+
 oneLevel("createExperiment", () => {
 
   lab.test("The function returned will execute tests with structure of Root", done => {
@@ -88,6 +87,16 @@ oneLevel("createExperiment", () => {
 
 lab.experiment("LabTesting", () => {
   lab.experiment("createExperiment", () => {
+
+    lab.test("skip and only functions exist", done => {
+
+      expect(method.skip).to.be.a.function();
+      expect(method.only).to.be.a.function();
+      expect(method).to.be.a.function();
+
+      return done();
+
+    });
 
     lab.test("No levels throws an error", done => {
 
@@ -152,6 +161,11 @@ lab.experiment("LabTesting", () => {
       Code.fail("unexpected success");
 
     });
+
+  });
+
+  lab.experiment("standardConstructorTest", () => {
+    testing.standardConstructorTest(TestClass, ["one", "two"], "one", "two");
 
   });
 
