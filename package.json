@@ -4,7 +4,8 @@
     "url": "https://github.com/midknight41/lab-testing/issues"
   },
   "contributors": [
-    "Chad Macey <chad_macey@hotmail.com>"
+    "Chad Macey <chad_macey@hotmail.com>",
+    "Jack MacDonald <jack.macdonald0@gmail.com>"
   ],
   "dependencies": {
     "code": "^4.0.0",
