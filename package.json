@@ -8,7 +8,7 @@
     "Jack MacDonald <jack.macdonald0@gmail.com>"
   ],
   "dependencies": {
-    "code": "^4.0.0",
+    "code": "^5.0.0",
     "lodash": "^4.16.6",
     "q": "^1.4.1"
   },
