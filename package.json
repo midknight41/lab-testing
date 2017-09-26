@@ -23,7 +23,7 @@
     "jscoverage": "^0.6.0",
     "lab": "^14.0.0",
     "rimraf": "^2.5.3",
-    "sinon": "^3.2.1"
+    "sinon": "^4.0.0"
   },
   "files": [
     "dist",
