@@ -46,36 +46,36 @@ class TestDestructClass {
 
 method("createExperiment", () => {
 
-  lab.test("The function returned will execute tests  with structure of Root, Main", done => {
+  lab.test("The function returned will execute tests  with structure of Root, Main", () => {
 
-    return done();
+    return;
 
   });
 });
 
 deepLevels("createExperiment", () => {
 
-  lab.test("The function returned will execute tests with structure of Root, One, Two, Three, Pass", done => {
+  lab.test("The function returned will execute tests with structure of Root, One, Two, Three, Pass", () => {
 
-    return done();
+    return;
 
   });
 });
 
 deepLevels.skip("createExperiment", () => {
 
-  lab.test("The function returned will skip tests with structure of Root, One, Two, Three, Pass", done => {
+  lab.test("The function returned will skip tests with structure of Root, One, Two, Three, Pass", () => {
 
-    return done();
+    return;
 
   });
 });
 
 oneLevel("createExperiment", () => {
 
-  lab.test("The function returned will execute tests with structure of Root", done => {
+  lab.test("The function returned will execute tests with structure of Root", () => {
 
-    return done();
+    return;
 
   });
 });
@@ -84,48 +84,46 @@ oneLevel("createExperiment", () => {
 lab.experiment("LabTesting", () => {
   lab.experiment("createExperiment", () => {
 
-    lab.test("skip and only functions exist", done => {
+    lab.test("skip and only functions exist", () => {
 
       expect(method.skip).to.be.a.function();
       expect(method.only).to.be.a.function();
       expect(method).to.be.a.function();
 
-      return done();
-
     });
 
-    lab.test("No levels throws an error", done => {
+    lab.test("No levels throws an error", () => {
 
       try {
         testing.createExperiment();
       } catch (ex) {
         expect(ex).to.be.an.error(Error, "At least one level is required");
-        return done();
+        return;
       }
 
       Code.fail("unexpected success");
 
     });
 
-    lab.test("A null first level throws an error", done => {
+    lab.test("A null first level throws an error", () => {
 
       try {
         testing.createExperiment(null, "DeepReferences");
       } catch (ex) {
         expect(ex).to.be.an.error(Error, "All levels must be strings");
-        return done();
+        return;
       }
 
       Code.fail("unexpected success");
 
     });
-    lab.test("An undefined first level throws an error", done => {
+    lab.test("An undefined first level throws an error", () => {
 
       try {
         testing.createExperiment(undefined, "DeepReferences");
       } catch (ex) {
         expect(ex).to.be.an.error(Error, "All levels must be strings");
-        return done();
+        return;
       }
 
       Code.fail("unexpected success");
@@ -133,25 +131,25 @@ lab.experiment("LabTesting", () => {
 
     });
 
-    lab.test("A null second level throws an error", done => {
+    lab.test("A null second level throws an error", () => {
 
       try {
         testing.createExperiment("CheckVerify", null);
       } catch (ex) {
         expect(ex).to.be.an.error(Error, "All levels must be strings");
-        return done();
+        return;
       }
 
       Code.fail("unexpected success");
 
     });
-    lab.test("An undefined second level throws an error", done => {
+    lab.test("An undefined second level throws an error", () => {
 
       try {
         testing.createExperiment("CheckVerify", undefined);
       } catch (ex) {
         expect(ex).to.be.an.error(Error, "All levels must be strings");
-        return done();
+        return;
       }
 
       Code.fail("unexpected success");
@@ -165,32 +163,8 @@ lab.experiment("LabTesting", () => {
 
   });
 
-  lab.experiment("standardContructorTest", () => {
-    testing.standardContructorTest(TestClass, ["one", "two"], "one", "two");
-
-  });
-
   lab.experiment("destructuredConstructorTest", () => {
     testing.destructuredConstructorTest(TestDestructClass, {"one": "one", "two": "two"});
-
-  });
-
-
-  lab.experiment("deprecated code works with warnings", () => {
-
-    const obj = new TestClass("one", "two");
-
-    testing.methodParameterTest(obj, obj.method, ["one", "two"], "one", "two");
-
-    const fnc = function (one, two) {
-
-      assert(one, "one is a required argument");
-      assert(two, "two is a required argument");
-
-      return;
-    };
-
-    testing.functionParameterTest(fnc, ["one", "two"], "one", "two");
 
   });
 

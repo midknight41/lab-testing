@@ -8,10 +8,7 @@ export declare class LabTesting {
     constructor(lab: Lab, throwsTester: ParameterTester, rejectTester: ParameterTester, constructorTester: ParameterTester);
     createExperiment(...levels: string[]): Function;
     destructuredConstructorTest(Class: any, validParam: Object): void;
-    standardContructorTest(Class: any, labels: string[], ...params: any[]): void;
     standardConstructorTest(Class: any, labels: string[], ...params: any[]): void;
-    functionParameterTest(fnc: Function, labels: string[], ...params: any[]): void;
-    methodParameterTest(self: Object, fnc: Function, labels: string[], ...params: any[]): void;
     private substituteEntry(index, params, value);
 }
 export default function getHelper(lab: Lab): LabTesting;

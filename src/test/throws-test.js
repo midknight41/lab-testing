@@ -42,12 +42,12 @@ method("methodParameterTest", () => {
 
   testing.throws.methodParameterTest(obj, obj.method, ["one", "two"], "one", "two");
 
-  lab.test("does not error when called correctly", done => {
+  lab.test("does not error when called correctly", () => {
 
     const obj1 = new TestClass("one", "two");
 
     obj1.method("one", "two");
-    return done();
+    return;
 
   });
 
@@ -63,12 +63,12 @@ method("methodDestructuredParameterTest", () => {
 
   testing.throws.methodDestructuredParameterTest(obj, obj.destructuredMethod, validArgs);
 
-  lab.test("does not error when called correctly", done => {
+  lab.test("does not error when called correctly", () => {
 
     const obj1 = new TestClass("one", "two");
 
     obj1.destructuredMethod(validArgs);
-    return done();
+    return;
 
   });
 
@@ -86,10 +86,10 @@ method("functionParameterTest", () => {
 
   testing.throws.functionParameterTest(fnc, ["one", "two"], "one", "two");
 
-  lab.test("does not error when called correctly", done => {
+  lab.test("does not error when called correctly", () => {
 
     fnc("one", "two");
-    return done();
+    return;
 
   });
 
@@ -112,10 +112,10 @@ method("functionDestructuredParameterTest", () => {
 
   testing.throws.functionDestructuredParameterTest(fnc, validArgs);
 
-  lab.test("does not error when called correctly", done => {
+  lab.test("does not error when called correctly", () => {
 
     fnc(validArgs);
-    return done();
+    return;
 
   });
 
