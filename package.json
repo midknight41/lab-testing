@@ -38,6 +38,9 @@
   "types": "./types/index.d.ts",
   "typings": "./types/index.d.ts",
   "name": "lab-testing",
+  "peerDependencies": {
+    "lab": ">=15.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/midknight41/lab-testing.git"
