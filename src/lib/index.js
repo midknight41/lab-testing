@@ -17,7 +17,7 @@ function construct(cls, params) {
 
 function throwTest(obj, fnc, lab, values, description, fieldName, isClass = false) {
 
-  lab.test(`throws on ${description} ${fieldName}`, done => {
+  lab.test(`throws on ${description} ${fieldName}`, () => {
 
     const throws = function () {
 
@@ -30,8 +30,6 @@ function throwTest(obj, fnc, lab, values, description, fieldName, isClass = fals
     };
 
     expect(throws).to.throw(Error);
-
-    done();
 
   });
 }
@@ -143,49 +141,16 @@ export class LabTesting {
 
     const lab = this.lab;
 
-    lab.test("ran the standard constructor test properly", done => {
+    lab.test("ran the standard constructor test properly", () => {
       expect(labels.length).to.equal(params.length);
-      done();
     });
 
-    lab.test("returns an object when constructed properly", done => {
+    lab.test("returns an object when constructed properly", () => {
 
       const me = {};
       construct(Class, params);
 
       expect(me).to.be.an.object();
-      done();
-
-    });
-
-    this.constructs.methodParameterTest({}, Class, labels, ...params);
-
-  }
-
-  standardContructorTest(Class, labels, ...params) {
-
-    /* eslint-disable no-console */
-    console.warn("LabTesting.standardContructorTest is deprecated (spelling error) and will be remove in future versions. Use LabTesting.standardConstructorTest instead.");
-
-    assert(Class, "Class is a required argument");
-    assert(labels, "labels is a required argument");
-    assert(params, "params is a required argument");
-
-    const lab = this.lab;
-
-    lab.test("ran the standard constructor test properly", done => {
-      expect(labels.length).to.equal(params.length);
-      done();
-    });
-
-    lab.test("returns an object when constructed properly", done => {
-
-      const me = {};
-      construct(Class, params);
-
-      expect(me).to.be.an.object();
-      done();
-
     });
 
     this.constructs.methodParameterTest({}, Class, labels, ...params);
@@ -199,39 +164,19 @@ export class LabTesting {
 
     const lab = this.lab;
 
-    lab.test("ran the desctructured constructor test properly", done => {
+    lab.test("ran the desctructured constructor test properly", () => {
       expect(validParam).to.be.an.object();
-      done();
     });
 
-    lab.test("returns an object when constructed properly", done => {
+    lab.test("returns an object when constructed properly", () => {
 
       const me = {};
       construct(Class, validParam);
 
       expect(me).to.be.an.object();
-      done();
-
     });
 
     this.constructs.methodDestructuredParameterTest({}, Class, validParam);
-  }
-
-  functionParameterTest(fnc, labels, ...params) {
-
-    /* eslint-disable no-console */
-    console.warn("LabTesting.functionParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.functionParameterTest instead.");
-
-    return this.throws.methodParameterTest(null, fnc, labels, ...params);
-  }
-
-  methodParameterTest(self, fnc, labels, ...params) {
-
-    /* eslint-disable no-console */
-    console.warn("LabTesting.methodParameterTest is deprecated and will be remove in future versions. Use LabTesting.throws.methodParameterTest instead.");
-
-    return this.throws.methodParameterTest(self, fnc, labels, ...params);
-
   }
 
   substituteEntry_(index, params, value) {

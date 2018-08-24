@@ -37,9 +37,8 @@ export default class ParameterTester {
 
     if (this.isClass === false) {
 
-      lab.test(`ran the ${testType} parameter test properly`, done => {
+      lab.test(`ran the ${testType} parameter test properly`, () => {
         expect(labels.length).to.equal(params.length);
-        done();
       });
 
     }
@@ -66,9 +65,8 @@ export default class ParameterTester {
 
     if (this.isClass === false) {
 
-      lab.test(`ran the ${testType} destructured parameter test properly`, done => {
+      lab.test(`ran the ${testType} destructured parameter test properly`, () => {
         expect(validParam).to.be.an.object();
-        done();
       });
 
     }
