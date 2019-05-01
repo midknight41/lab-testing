@@ -86,3 +86,6 @@ coverage
 
 #Test files
 *.testsettings
+
+#Configs
+.npmrc

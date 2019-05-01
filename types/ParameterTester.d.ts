@@ -1,4 +1,4 @@
-import { Lab } from "lab";
+import { Script } from "@hapi/lab";
 export interface ParameterSpecification {
     labels: string[];
     params: any[];
@@ -7,7 +7,7 @@ export default class ParameterTester {
     private lab;
     private testContainer;
     private isClass;
-    constructor(lab: Lab, testContainer: Function, isClass: boolean);
+    constructor(lab: Script, testContainer: Function, isClass: boolean);
     functionParameterTest(fnc: Function, labels: string[], ...params: any[]): void;
     functionDestructuredParameterTest(fnc: Function, inputArgs: Object): void;
     methodDestructuredParameterTest(self: Object, fnc: Function, inputArgs: Object): void;

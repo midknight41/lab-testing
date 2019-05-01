@@ -1,4 +1,4 @@
-import * as Code from "code";
+import * as Code from "@hapi/code";
 import assert from "assert";
 
 const expect = Code.expect;

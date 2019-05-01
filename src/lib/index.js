@@ -1,5 +1,5 @@
 
-import * as Code from "code";
+import * as Code from "@hapi/code";
 import ParameterTester from "./ParameterTester";
 import assert from "assert";
 

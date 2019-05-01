@@ -8,7 +8,7 @@
     "Jack MacDonald <jack.macdonald0@gmail.com>"
   ],
   "dependencies": {
-    "code": "^5.0.0",
+    "@hapi/code": "^5.3.1",
     "lodash": "^4.17.10",
     "q": "^1.4.1"
   },
@@ -21,9 +21,9 @@
     "eslint": "^5.4.0",
     "istanbul": "^0.4.4",
     "jscoverage": "^0.6.0",
-    "lab": "^16.0.0",
+    "@hapi/lab": "^18.1.0",
     "rimraf": "^2.5.3",
-    "sinon": "^6.0.0"
+    "sinon": "^7.0.0"
   },
   "engines": {
     "node": ">=8.9.0"
@@ -39,7 +39,7 @@
   "typings": "./types/index.d.ts",
   "name": "lab-testing",
   "peerDependencies": {
-    "lab": ">=15.0.0"
+    "@hapi/lab": ">=18.1.0"
   },
   "repository": {
     "type": "git",
@@ -55,9 +55,9 @@
     "prelint": "npm run build",
     "lint": "eslint ./src -c .eslintrc.json",
     "pretest": "npm run lint",
-    "test": "lab ./dist/test/ -v -S --assert code",
+    "test": "lab ./dist/test/ -v -S --assert @hapi/code",
     "pret": "npm run build",
-    "t": "lab ./dist/test/ -v -S --assert code",
+    "t": "lab ./dist/test/ -v -S --assert @hapi/code",
     "travis": "npm run test",
     "premajor": "npm run test",
     "major": "npm version major -m \"published to npm as v%s\" && git push --follow-tags && npm publish",
