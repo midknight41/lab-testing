@@ -1,6 +1,6 @@
 ﻿// Testing Framework
-import * as Code from "code";
-import * as Lab from "lab";
+import * as Code from "@hapi/code";
+import * as Lab from "@hapi/lab";
 import getHelper from "../lib/index";
 import assert from "assert";
 

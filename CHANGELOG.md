@@ -1,5 +1,9 @@
 # Changes
 
+### 4.0.0
+
+Peer dependency updated to be `@hapi/lab: ">=18.1.0"`
+
 ### 3.0.0
 
 Updated all dependencies to latest major versions. Updated to work with latest version of lab which no longer supports the done callback in tests, as such the minimum version of lab this package will work with is 15.0.0 and minimum node version is 8.9
