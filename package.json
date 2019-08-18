@@ -18,7 +18,7 @@
     "babel-eslint": "^10.0.1",
     "babel-preset-env": "^1.7.0",
     "coveralls": "^3.0.0",
-    "eslint": "^5.4.0",
+    "eslint": "^6.2.0",
     "istanbul": "^0.4.4",
     "jscoverage": "^0.6.0",
     "@hapi/lab": "^18.1.0",
