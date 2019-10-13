@@ -8,7 +8,7 @@
     "Jack MacDonald <jack.macdonald0@gmail.com>"
   ],
   "dependencies": {
-    "@hapi/code": "^5.3.1",
+    "@hapi/code": "^7.0.0",
     "lodash": "^4.17.10",
     "q": "^1.4.1"
   },
