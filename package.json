@@ -21,7 +21,7 @@
     "eslint": "^5.4.0",
     "istanbul": "^0.4.4",
     "jscoverage": "^0.6.0",
-    "@hapi/lab": "^18.1.0",
+    "@hapi/lab": "^21.0.0",
     "rimraf": "^2.5.3",
     "sinon": "^7.0.0"
   },
