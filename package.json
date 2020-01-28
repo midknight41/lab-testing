@@ -22,7 +22,7 @@
     "istanbul": "^0.4.4",
     "jscoverage": "^0.6.0",
     "@hapi/lab": "^19.0.0",
-    "rimraf": "^2.5.3",
+    "rimraf": "^3.0.1",
     "sinon": "^7.0.0"
   },
   "engines": {
